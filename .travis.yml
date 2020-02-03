@@ -1,0 +1,14 @@
+env:
+  global:
+    - CC_TEST_REPORTER_ID=d1c09e20447ae8db9c52cc5e8e6a8da876b2ffbb726f5b24f951e0ce8dc11367
+language: python
+python:
+  - "3.6"
+before_install:
+  - pip install poetry
+install:
+  - make install
+script:
+  - make lint
+test:
+  - make test

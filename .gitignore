@@ -1,0 +1,9 @@
+*.egg-info
+__pycache__/
+dist/
+.vscode/
+.pytest_cache/
+coverage.xml
+.DS_Store
+.coverage
+.env
