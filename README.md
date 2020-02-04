@@ -4,9 +4,4 @@
 
 Task_manager is a small web application helping to deal with tasks.
 
-### Installation:
-
-```sh
-$ pip install --user --index-url https://test.pypi.org/simple/ \
-    --extra-index-url https://pypi.org/simple/ slavarobotam_task_manager
-```
+Can be found here: [slavarobotam-task-manager.herokuapp.com](https://slavarobotam-task-manager.herokuapp.com/)
