@@ -3,6 +3,10 @@ name = "slavarobotam_task_manager"
 version = "0.1.0"
 description = "\"Light task manager\""
 authors = ["Mari <zefiratakuet@yandex.ru>"]
+readme = "README.md"
+classifiers = [
+  "Private :: Do Not Upload",
+]
 
 [tool.poetry.dependencies]
 python = "^3.7"
