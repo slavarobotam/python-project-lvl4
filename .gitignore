@@ -7,3 +7,4 @@ coverage.xml
 .DS_Store
 .coverage
 .env
+*.sqlite3
