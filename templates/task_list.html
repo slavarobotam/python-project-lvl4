@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Task list{% endblock %}
+
+{% block content %}
+  <h1>Tasks</h1>
+  {% for task in tasks %}
+    <h2>
+      <a href="{{ task.get_absolute_url }}">
+        {{ task.name }}
+      </a>
+    </h2>
+    <p>Description {{ task.description }}</p>
+    <p>Task for {{ task.assigned_to }} by {{ task.creator }}</p>
+    {{ post.body|truncatewords:30|linebreaks }}
+  {% endfor %}
+{% endblock %}

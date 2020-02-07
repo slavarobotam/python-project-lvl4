@@ -40,7 +40,7 @@ ALLOWED_HOSTS = ['0.0.0.0',
 
 INSTALLED_APPS = [
     # My apps
-    'mainpage',
+    'mainpage.apps.MainpageConfig',
 
     # Third party apps
     'whitenoise.runserver_nostatic',
@@ -138,11 +138,11 @@ USE_TZ = True
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "mainpage"),
+    os.path.join(BASE_DIR, "static"),
 ]
 
 ROLLBAR = {

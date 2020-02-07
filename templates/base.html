@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %}{% endblock %}</title>
+  <link href="{% static 'css/cover.css' %}" rel="stylesheet">
+  <link rel="icon" href="{% static 'favicon.ico' %}">
+</head>
+<body>
+  <div>
+    {% block content %}
+    {% endblock %}
+  </div>
+  <div>
+    <h2>Tasks</h2>
+      <p>This is task manager</p>
+  </div>
+</body>
+</html>
