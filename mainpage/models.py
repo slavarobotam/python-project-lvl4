@@ -52,9 +52,11 @@ class Task(models.Model):
                                     related_name='assigned_to')
     tags = models.ManyToManyField(Tag,
                                   related_name='tags')
+    objects = models.Manager()
 
     def get_absolute_url(self):
         return "/{}/".format(self.pk)
 
     def __str__(self):
         return self.name
+
