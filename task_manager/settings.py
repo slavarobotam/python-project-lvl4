@@ -12,9 +12,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 #import dotenv
 import dj_database_url
-import django_heroku
-from dotenv import load_dotenv
-from dotenv import find_dotenv
+#import django_heroku
+from dotenv import load_dotenv, find_dotenv
 import psycopg2
 
 load_dotenv(find_dotenv())
@@ -198,7 +197,6 @@ LOGGING = {
 }
 
 
-django_heroku.settings(locals())
-
+#django_heroku.settings(locals())
 
 DATABASES['default'] = dj_database_url.config(conn_max_age=600)
