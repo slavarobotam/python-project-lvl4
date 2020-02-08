@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "slavarobotam_task_manager"
 version = "0.1.0"
-description = "\"Light task manager\""
+description = "Light task manager"
 authors = ["Mari <zefiratakuet@yandex.ru>"]
 readme = "README.md"
 classifiers = [
@@ -16,9 +16,9 @@ rollbar = "^0.14.7"
 python-dotenv = "^0.10.5"
 whitenoise = "^5.0.1"
 gunicorn = "^20.0.4"
-psycopg2 = "2.7.7"
 dj-database-url = "^0.5.0"
-django-heroku = "^0.3.1"
+psycopg2-binary = "^2.8.4"
+
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.7.9"

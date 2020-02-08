@@ -15,6 +15,8 @@ import dj_database_url
 import django_heroku
 from dotenv import load_dotenv
 from dotenv import find_dotenv
+import psycopg2
+
 load_dotenv(find_dotenv())
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -102,8 +104,9 @@ WSGI_APPLICATION = 'task_manager.wsgi.application'
 #     }
 # }
 DATABASES = {}
-DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
+DATABASE_URL = os.getenv("DATABASE_URL")
+#conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -194,8 +197,8 @@ LOGGING = {
     }
 }
 
-# This should already be in your settings.py
-django_heroku.settings(locals())
-# This is new
-del DATABASES['default']['OPTIONS']['sslmode']
 
+django_heroku.settings(locals())
+
+
+DATABASES['default'] = dj_database_url.config(conn_max_age=600)
