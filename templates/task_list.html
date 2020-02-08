@@ -5,14 +5,37 @@
 
 {% block content %}
   <h1>Tasks</h1>
-  {% for task in tasks %}
-    <h2>
-      <a href="{{ task.get_absolute_url }}">
-        {{ task.name }}
-      </a>
-    </h2>
-    <p>Description {{ task.description }}</p>
-    <p>Task for {{ task.assigned_to }} by {{ task.creator }}</p>
-    {{ post.body|truncatewords:30|linebreaks }}
-  {% endfor %}
+  <table class="table table-hover table-dark">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Status</th>
+        <th scope="col">Creator</th>
+        <th scope="col">Assigned</th>
+        <th scope="col">Tags</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for task in tasks %}
+        <tr style="transform: rotate(0);">
+            <th scope="row">{{ task.id }}</th>
+            <td><a class="stretched-link" href="{{ task.get_absolute_url }}">
+                {{ task.name }}</a></td>
+            <td>{{ task.description|truncatewords:5|linebreaks }}</td>
+            <td>{{ task.status }}</td>
+            <td>{{ task.creator }}</td>
+            <td>{{ task.assigned_to }}</td>
+            <td>{% for tag in task.tags.all %}
+              {{ tag }} <br>{% endfor %}</td>
+            <!-- <td>{% for tag in task.tags.all %}
+              {{ tag|join:", " }}
+                {% endfor %}
+            </td> -->
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
 {% endblock %}
