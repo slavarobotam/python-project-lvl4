@@ -1,0 +1,31 @@
+{% load static %}
+<header class="masthead mb-auto">
+  <div class="inner">
+    <h3 class="masthead-brand">Task manager &lt;3</h3>
+    <nav class="nav nav-masthead justify-content-center">
+        <a
+          {% if '/' == request.path %}
+            class="nav-link active"
+          {% else %}
+            class="nav-link"
+          {% endif %}
+          href="{% url 'mainpage:task_list' %}">Home</a>
+
+        <a
+          {% if 'features' in request.path %}
+            class="nav-link active"
+          {% else %}
+            class="nav-link"
+          {% endif %}
+          href="{% url 'mainpage:features' %}">Features</a>
+
+        <a
+          {% if 'contact' in request.path %}
+            class="nav-link active"
+          {% else %}
+            class="nav-link"
+          {% endif %}
+          href="{% url 'mainpage:contact' %}">Contact</a>
+    </nav>
+  </div>
+</header>

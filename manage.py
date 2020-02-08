@@ -22,6 +22,6 @@ def main():
 
 
 if __name__ == '__main__':
-    load_dotenv(verbose=True)
+    load_dotenv()
     rollbar.init(os.getenv("ACCESS_TOKEN"))
     main()

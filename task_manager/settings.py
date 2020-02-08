@@ -10,9 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 import os
-#import dotenv
 import dj_database_url
-#import django_heroku
 from dotenv import load_dotenv, find_dotenv
 import psycopg2
 
@@ -20,9 +18,6 @@ load_dotenv(find_dotenv())
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# dotenv_file = os.path.join(BASE_DIR, ".env")
-# if os.path.isfile(dotenv_file):
-#     dotenv.load_dotenv(dotenv_file)
 
 
 # Quick-start development settings - unsuitable for production
@@ -196,7 +191,5 @@ LOGGING = {
     }
 }
 
-
-#django_heroku.settings(locals())
 
 DATABASES['default'] = dj_database_url.config(conn_max_age=600)

@@ -1,19 +1,41 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-  <title>{% block title %}{% endblock %}</title>
-  <link href="{% static 'cover.css' %}" rel="stylesheet">
-  <link rel="icon" href="{% static 'favicon.ico' %}">
-</head>
-<body>
-  <div>
-    {% block content %}
-    {% endblock %}
-  </div>
-  <div>
-    <h2>Tasks</h2>
-      <p>This is task manager</p>
-  </div>
-</body>
+{% load static bootstrap4 %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% bootstrap_css %}
+    <link href="{% static 'cover.css' %}" rel="stylesheet">
+    <link rel="icon" href="{% static 'favicon.ico' %}">
+    <title>{% block title %}{% endblock %}</title>
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+  </head>
+
+
+  <body class="text-center">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+      {% include 'header.html' %}
+    
+      {% block content %} {% endblock %}
+
+      {% include 'footer.html' %}
+    </div>
+  </body>
 </html>
