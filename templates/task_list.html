@@ -29,13 +29,12 @@
             <td>{{ task.assigned_to }}</td>
             <td>{% for tag in task.tags.all %}
               {{ tag }} <br>{% endfor %}</td>
-            <!-- <td>{% for tag in task.tags.all %}
-              {{ tag|join:", " }}
-                {% endfor %}
-            </td> -->
         </tr>
         {% endfor %}
     </tbody>
   </table>
+  <p class="lead">
+    <a href="{% url 'mainpage:task_new' %}" class="btn btn-lg btn-secondary">Add new</a>
+  </p>
 
 {% endblock %}

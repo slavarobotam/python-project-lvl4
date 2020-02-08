@@ -1,24 +1,6 @@
 from django.db import models  # noqa: F401
 from django.contrib.auth.models import User
-
-
-# class TaskStatus(models.Model):
-#     NEW = 'new'
-#     STARTED = 'started'
-#     TESTING = 'testing'
-#     FINISHED = 'finished'
-#     STATUS_CHOICES = (
-#         (NEW, 'New'),
-#         (STARTED, 'Started'),
-#         (TESTING, 'Testing')
-#         (FINISHED, 'Finished')
-#     )
-#     name = models.CharField(max_length=15,
-#                             choices=STATUS_CHOICES,
-#                             default='new')
-
-#     def __str__(self):
-#         return self.name
+from django.forms import ModelForm
 
 
 class Tag(models.Model):
@@ -59,3 +41,9 @@ class Task(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class TaskForm(ModelForm):
+    class Meta:
+        model = Task
+        fields = ['name', 'description', 'status', 'creator', 'assigned_to', 'tags']

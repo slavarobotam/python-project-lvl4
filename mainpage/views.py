@@ -1,5 +1,5 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Task
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Task, TaskForm
 
 
 def index(request):
@@ -25,8 +25,33 @@ def task_list(request):
                   {'tasks': tasks})
 
 
-def task_detail(request, pk):
+def task_view(request, pk):
     task = get_object_or_404(Task, pk=pk)
     return render(request,
-                  'task_details.html',
+                  'task_view.html',
                   {'task': task})
+
+
+def task_create(request, template_name='tasks/task_form.html'):
+    form = TaskForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('/')
+    return render(request, template_name, {'form': form})
+
+
+def task_update(request, pk, template_name='tasks/task_form.html'):
+    task = get_object_or_404(Task, pk=pk)
+    form = TaskForm(request.POST or None, instance=task)
+    if form.is_valid():
+        form.save()
+        return redirect('/')
+    return render(request, template_name, {'form': form})
+
+
+def task_delete(request, pk, template_name='tasks/task_confirm_delete.html'):
+    task = get_object_or_404(Task, pk=pk)    
+    if request.method == 'POST':
+        task.delete()
+        return redirect('/')
+    return render(request, template_name, {'object': task})
