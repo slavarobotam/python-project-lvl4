@@ -9,12 +9,14 @@ def index(request):
 def main(request):
     return render(request, 'main.html')
 
+
 def contact(request):
     return render(request, 'contact.html')
 
 
 def features(request):
     return render(request, 'features.html')
+
 
 def task_list(request):
     tasks = Task.objects.all()

@@ -10,6 +10,7 @@ class TaskAdmin(admin.ModelAdmin):
     raw_id_fields = ('creator',)
     ordering = ('status', 'creator')
 
+
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
     list_display = ('name',)

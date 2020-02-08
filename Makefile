@@ -11,7 +11,8 @@ uninstall:
 	@pip uninstall slavarobotam_task_manager
 
 lint:
-	@poetry run flake8 --ignore=F401
+	@poetry run flake8 --ignore=F401\
+		--exclude .git,__pycache__,migrations
 
 publish:
 	@poetry build
