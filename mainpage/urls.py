@@ -1,19 +1,14 @@
 from django.urls import path
-
 from . import views
 
 app_name = 'mainpage'
 
 urlpatterns = [
-    path('index/', views.index, name='index'),
-    # task views
-    path('main/', views.main, name='main'),
     path('contact/', views.contact, name='contact'),
     path('features/', views.features, name='features'),
+    path('<int:pk>/', views.view_task, name='view_task'),
+    path('new', views.create_task, name='new_task'),
+    path('edit/<int:pk>', views.update_task, name='edit_task'),
+    path('delete/<int:pk>', views.delete_task, name='delete_task'),
     path('', views.task_list, name='task_list'),
-    path('<int:pk>/', views.task_view, name='task_view'),
-    path('new', views.task_create, name='task_new'),
-    path('edit/<int:pk>', views.task_update, name='task_edit'),
-    path('delete/<int:pk>', views.task_delete, name='task_delete'),
-
 ]

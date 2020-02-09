@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %} HOME {% endblock %} 
+{% block content%} 
+    {%if user.is_authenticated %} 
+        Welcome {{ user.username }} !
+        {% block taskscontent %} {% endblock %}
+       <p ><a href="{% url 'logout' %}" class="text-secondary"><u>logout</u></a></p>
+    {% else %}
+        <h2>You are not logged in</h2>
+        <br>
+        <p><a href="{% url 'login'%}" class="btn btn-secondary">Login</a>
+            <a href="{% url 'login'%}" class="btn m-3 btn-secondary">I don't want to login</a></p>
+        {% block logincontent %} {% endblock %}
+    {% endif %} {% endblock %}

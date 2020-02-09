@@ -1,6 +1,6 @@
 from django.db import models  # noqa: F401
 from django.contrib.auth.models import User
-from django.forms import ModelForm
+from django.urls import reverse
 
 
 class Tag(models.Model):
@@ -22,7 +22,7 @@ class Task(models.Model):
         (FINISHED, 'Finished')
     )
     name = models.CharField(max_length=50, unique=True)
-    description = models.CharField(max_length=250)
+    description = models.TextField(default='To do:')
     status = models.CharField(max_length=10,
                               choices=STATUS_CHOICES,
                               default=NEW)
@@ -37,13 +37,12 @@ class Task(models.Model):
     objects = models.Manager()
 
     def get_absolute_url(self):
-        return "/{}/".format(self.pk)
+        return reverse('mainpage:view_task', kwargs={"pk": self.pk})
 
     def __str__(self):
         return self.name
 
-
-class TaskForm(ModelForm):
-    class Meta:
-        model = Task
-        fields = ['name', 'description', 'status', 'creator', 'assigned_to', 'tags']
+    def description_lines(self):
+        return filter(
+            None,
+            (line.strip() for line in self.description.splitlines()))

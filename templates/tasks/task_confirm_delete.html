@@ -3,9 +3,11 @@
 {% block title %}Delete{% endblock %}
 
 {% block content %}
-<h1>Task Delete</h1>
 <form method="post">{% csrf_token %}
-    Are you sure you want to delete "{{ object }}" ?
-    <input type="submit" value="Submit" />
+    <h4>Do you really want to delete "{{ object }}"? </h4>
+    <br><br>
+    <p><input type="submit" class="btn btn-lg btn-secondary" value="Yes"/>
+    <a href="{% url 'mainpage:task_list'%}" class="btn btn-lg btn-secondary" role="button">Not really</a>
+
 </form>
 {% endblock %}

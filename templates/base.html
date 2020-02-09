@@ -34,11 +34,15 @@
 
   <body class="text-center">
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-      {% include 'header.html' %}
+      {% include 'components/header.html' %}
     
-      {% block content %} {% endblock %}
 
-      {% include 'footer.html' %}
+
+      {% block content %} {% endblock %}
+ 
+
+
+      {% include 'components/footer.html' %}
     </div>
   </body>
 </html>
