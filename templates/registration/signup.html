@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<h2>Sign up Form</h2>
+<form method="post">
+  {% csrf_token %}
+  {% for field in form %}
+    <p>
+      {{ field.label_tag }}<br>
+      {{ field }}<br>
+      {% for error in field.errors %}
+        <p style="color: red">{{ error }}</p>
+      {% endfor %}
+    </p>
+  {% endfor %}
+  <input type="submit" class="btn btn-lg btn-secondary" value="Sign up"/>
+  <a href="{% url 'login' %}" class="btn btn-lg btn-secondary" role="button">Back to login</a>
+</form>
+{% endblock %}
