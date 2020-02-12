@@ -3,10 +3,7 @@ from .forms import TaskForm
 from .models import Task
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render, redirect
-from .forms import SignUpForm
 from django.contrib.auth.decorators import login_required
-
 
 
 def contact(request):
@@ -21,14 +18,6 @@ def features(request):
 def home(request):
     tasks = Task.objects.all()
     return render(request, 'home.html', {'tasks': tasks})
-
-
-
-# def task_list(request):
-#     tasks = Task.objects.all()
-#     return render(request,
-#                   'task_list.html',
-#                   {'tasks': tasks})
 
 
 def view_task(request, pk):
@@ -77,6 +66,3 @@ def signup(request):
         login(request, user)
         return redirect('/')
     return render(request, 'registration/signup.html', {'form': form})
-
-
-    

@@ -46,4 +46,3 @@ class Task(models.Model):
         return filter(
             None,
             (line.strip() for line in self.description.splitlines()))
-
