@@ -105,10 +105,10 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.'
-    #     'UserAttributeSimilarityValidator',
-    # },
+    {
+        'NAME': 'django.contrib.auth.password_validation.'
+        'UserAttributeSimilarityValidator',
+    },
     # {
     #     'NAME': 'django.contrib.auth.password_validation.'
     #     'MinimumLengthValidator',
@@ -196,5 +196,11 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+BOOTSTRAP4 = {
+    'horizontal_field_class': 'col-md-4',
+    'horizontal_label_class': 'col-md-2 align-middle text-right',
+    'set_placeholder': False,
+}
 
 DATABASES['default'] = dj_database_url.config(conn_max_age=600)

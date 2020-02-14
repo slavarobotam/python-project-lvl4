@@ -1,46 +1,20 @@
 {% extends "base.html" %}
-
+{% load bootstrap4 %}
 {% block content %}
+<h2>Login</h2>
 
 {% if form.errors %}
   <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
 
-{% if next %}
-  {% if user.is_authenticated %}
-    <p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
-  {% else %}
-    <div style="text-align:center;" ><h1>Please login</h1></div>
-    <!-- <p><a href="{% url 'login'%}" class="btn btn-secondary">Login</a>
-      <a href="{% url 'mainpage:signup' %}">New us55er?</a></p> -->
+<form method="post">{% csrf_token %}
+    {% for field in form %}
+        {% bootstrap_field field layout='horizontal' form_group_class='row justify-content-center my-3' show_help=False %}
+    {% endfor %}
 
-  {% endif %}
-{% endif %}
-
-<form method="post" action="{% url 'login' %}">
-{% csrf_token %}
-
-
-<div style="text-align:center;">
-  <span>{{ form.username.label_tag }}</span>
-  <span>{{ form.username }}</span>
-</div>
-
-<div style="text-align:center;">
-  <span>{{ form.password.label_tag }}</span>
-  <span>{{ form.password }}</span>
-</div>
-</table>
-
-<!-- <input type="submit" value="login" /> -->
-<p><input type="submit" class="btn btn-lg btn-secondary" value="login"/>
-  <a href="{% url 'mainpage:signup' %}" class="btn btn-lg btn-secondary" role="button">New user</a>
-
+    <div class="row justify-content-center mt-4">
+      <button type="submit" class="btn btn-lg btn-secondary mx-2">Login</button>
+      <a href="{% url 'mainpage:signup' %}" class="btn btn-lg btn-secondary mx-2" role="button">Sign up</a>
+      </div>
 </form>
-
-<!-- 
-<p><a href="{% url 'mainpage:signup' %}">New user?</a></p> -->
-
-
 {% endblock %}
