@@ -2,7 +2,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .forms import TaskForm, SignUpForm
 from .models import Task
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 
 

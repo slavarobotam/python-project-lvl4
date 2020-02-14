@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 import dj_database_url
 from dotenv import load_dotenv, find_dotenv
-# import psycopg2
+
 
 load_dotenv(find_dotenv())
 
@@ -34,7 +34,6 @@ ALLOWED_HOSTS = ['0.0.0.0',
                  '192.168.1.40',
                  '127.0.0.1',
                  '.herokuapp.com']
-
 
 # Application definition
 
