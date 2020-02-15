@@ -31,7 +31,6 @@ class Task(models.Model):
     name = models.CharField(max_length=50, unique=True)
     description = models.TextField(default='To do:')
     status = models.ForeignKey(Status,
-                               default='New',
                                on_delete=models.CASCADE,
                                related_name='statuses')
     creator = models.ForeignKey(User,
