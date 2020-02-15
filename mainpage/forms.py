@@ -1,10 +1,10 @@
-from django.forms import ModelForm
-from .models import Task
+from django import forms
+from mainpage.models import Task, Status
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
 
-class TaskForm(ModelForm):
+class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ['name',
@@ -25,4 +25,10 @@ class TaskForm(ModelForm):
 class SignUpForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ('username', 'password1', 'password2',)
+        fields = ['username', 'password1', 'password2',]
+
+
+class StatusForm(forms.ModelForm):
+    class Meta:
+        model = Status
+        fields = ['status_value', ]

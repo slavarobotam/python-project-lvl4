@@ -2,6 +2,11 @@
  * Globals
  */
 
+/* Rows */
+.row-hover:hover {
+  background-color: #707070;
+}
+
 /* Links */
 a,
 a:focus,
@@ -84,6 +89,8 @@ body {
     float: right;
   }
 }
+
+
 
 
 /*

@@ -3,28 +3,28 @@
   <br>
   <div class="div div-hover div-dark">
     
-    <div class="row">
-      <div class="col">#</div>
-      <div class="col">Name</div>
-      <div class="col">Description</div>
-      <div class="col">Status</div>
-      <div class="col">Creator</div>
-      <div class="col">Assigned</div>
-      <div class="col">Tags</div>
+    <div class="row mb-2 justify-content-center font-weight-bold text-uppercase text-left">
+      <!--  <div class="col">#</div> --> 
+      <div class="col-sm-2">Name</div>
+      <div class="col-sm-3">Description</div>
+      <div class="col-sm">Status</div>
+      <div class="col-sm">Creator</div>
+      <div class="col-sm">Assigned</div>
+      <div class="col-sm-2">Tags</div>
     </div>
   
   
       {% for task in tasks %}
-      <div class="row">
-          <div class="col">{{ forloop.counter }}</div>
-          <div class="col"><a class="stretched-link" href="{{ task.get_absolute_url }}">
-              {{ task.name }}</a></div>
-          <div class="col">{{ task.description|truncatewords:5|linebreaks }}</div>
-          <div class="col">{{ task.status }}</div>
-          <div class="col">{{ task.creator }}</div>
-          <div class="col">{{ task.assigned_to }}</div>
-          <div class="col">{% for tag in task.tags.all %}
-            {{ tag }} <br>{% endfor %}</div>
+      <div class="row row-hover justify-content-center text-left position-relative">
+          <!-- <div class="col">{{ forloop.counter }}</div> -->
+          <div class="col-sm-2 position-static"><a class="stretched-link" href="{{ task.get_absolute_url }}">
+              {{ task.name|truncatewords:7 }}</a></div>
+          <div class="col-sm-3">{{ task.description|truncatewords:5|linebreaks }}</div>
+          <div class="col-sm">{{ task.status }}</div>
+          <div class="col-sm">{{ task.creator }}</div>
+          <div class="col-sm">{{ task.assigned_to }}</div>
+          <div class="col-sm-2">{{ task.tags.all|join:", " }}</div>
+      
       </div>
       {% endfor %}
   

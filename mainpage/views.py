@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .forms import TaskForm, SignUpForm
-from .models import Task
+from mainpage.forms import TaskForm, SignUpForm, StatusForm
+from mainpage.models import Task, Status
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 
@@ -9,8 +9,26 @@ def contact(request):
     return render(request, 'pages/contact.html')
 
 
-def features(request):
-    return render(request, 'pages/features.html')
+def statuses(request):
+    statuses = Status.objects.all()
+    form = StatusForm()
+    return render(request, 'pages/statuses.html', {'statuses': statuses, 'form': form})
+
+
+def create_status(request):
+    form = StatusForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('/statuses/')
+    return render(request, 'pages/statuses.html', {'form': form})
+
+
+def delete_status(request, pk):
+    status = get_object_or_404(Status, pk=pk)
+    if request.method == 'POST':
+        status.delete()
+        return redirect('/statuses/')
+    return render(request, 'pages/statuses.html', {'object': status})
 
 
 @login_required(login_url='/accounts/login/')
@@ -49,7 +67,7 @@ def update_task(request, pk, template_name='tasks/task_form.html'):
 
 def delete_task(request, pk, template_name='tasks/task_confirm_delete.html'):
     task = get_object_or_404(Task, pk=pk)
-    if request.method == 'POST':
+    if request.method == 'DELETE':
         task.delete()
         return redirect('/')
     return render(request, template_name, {'object': task})

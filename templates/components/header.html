@@ -12,12 +12,12 @@
           href="{% url 'mainpage:home' %}">Tasks</a>
 
         <a
-          {% if 'features' in request.path %}
+          {% if 'statuses' in request.path %}
             class="nav-link active"
           {% else %}
             class="nav-link"
           {% endif %}
-          href="{% url 'mainpage:features' %}">Features</a>
+          href="{% url 'mainpage:statuses' %}">Statuses</a>
 
         <a
           {% if 'contact' in request.path %}

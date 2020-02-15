@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block title %}Settings{% endblock %}
+
+{% block content %}
+<main role="main" class="inner cover">
+    <h1 class="cover-heading">Statuses</h1>
+    <p class="mb-5">Here you can edit and delete statuses</p>
+    {% if statuses %}
+    <div class="container">
+            {% for status in statuses %}
+            <div class="row justify-content-center p-1">
+                <div class="col-lg-1 mr-4">{{ status.status_value }}</div>
+                <div class="col-lg-1 mr-4"><button class="btn btn-sm btn-secondary">Update</button></div>
+                <div class="col-lg-1"><form action="{% url 'mainpage:delete_status' status.id %}"  method="post" >
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-secondary">Delete</button>
+                    </form></div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+
+    <form action="{% url 'mainpage:create_status' %}" class="form-inline justify-content-center mt-5" method="post" >{% csrf_token %}
+        <label class="mr-3" for="status_value">Add new:</label>
+        {% if form.errors %} {{ form.errors }} {% endif %}
+        {% bootstrap_field form.status_value layout='horizontal' show_label=False set_placeholder=False show_help=False %}
+        <button type="submit" class="btn btn-secondary ml-3">Create</button>
+    </form>
+
+            
+
+</main>
+{% endblock %}

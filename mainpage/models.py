@@ -3,6 +3,23 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 
 
+
+
+
+class Status(models.Model):
+    CHOICES = (
+    ('new', 'New'),
+    ('started', 'Started'),
+    ('testing', 'Testing'),
+    ('finished', 'Finished'),
+    )
+    status_value = models.CharField(max_length=100)
+    objects = models.Manager()
+
+    def __str__(self):
+        return self.status_value
+
+
 class Tag(models.Model):
     name = models.CharField(max_length=50, unique=True)
 
@@ -11,21 +28,12 @@ class Tag(models.Model):
 
 
 class Task(models.Model):
-    NEW = 'new'
-    STARTED = 'started'
-    TESTING = 'testing'
-    FINISHED = 'finished'
-    STATUS_CHOICES = (
-        (NEW, 'New'),
-        (STARTED, 'Started'),
-        (TESTING, 'Testing'),
-        (FINISHED, 'Finished')
-    )
     name = models.CharField(max_length=50, unique=True)
     description = models.TextField(default='To do:')
-    status = models.CharField(max_length=10,
-                              choices=STATUS_CHOICES,
-                              default=NEW)
+    status = models.ForeignKey(Status,
+                               default='New',
+                               on_delete=models.CASCADE,
+                               related_name='statuses')
     creator = models.ForeignKey(User,
                                 on_delete=models.CASCADE,
                                 related_name='tasks')

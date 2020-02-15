@@ -6,7 +6,10 @@ app_name = 'mainpage'
 
 urlpatterns = [
     path('contact/', views.contact, name='contact'),
-    path('features/', views.features, name='features'),
+    path('statuses/', views.statuses, name='statuses'),
+    path('statuses/<int:pk>/delete/', views.delete_status, name='delete_status'),
+    path('statuses/new/', views.create_status, name='create_status'),
+    # path('statuses/<int:pk>/edit/', views.update_task, name='edit_task'),
     path('tasks/<int:pk>/', views.view_task, name='view_task'),
     path('tasks/', views.home, name='home'),
     path('tasks/new', views.create_task, name='new_task'),
