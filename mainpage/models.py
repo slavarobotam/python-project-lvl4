@@ -3,16 +3,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 
 
-
-
-
 class Status(models.Model):
-    CHOICES = (
-    ('new', 'New'),
-    ('started', 'Started'),
-    ('testing', 'Testing'),
-    ('finished', 'Finished'),
-    )
     status_value = models.CharField(max_length=100)
     objects = models.Manager()
 

@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='task',
             name='status',
-            field=models.ForeignKey(default='New', on_delete=django.db.models.deletion.CASCADE, related_name='statuses', to='mainpage.Status'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='statuses', to='mainpage.Status'),
         ),
     ]
