@@ -196,10 +196,4 @@ LOGOUT_REDIRECT_URL = '/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-BOOTSTRAP4 = {
-#     'horizontal_field_class': 'col-md-2',
-#     'horizontal_label_class': 'col-md-2 align-middle text-right  justify-content-center',
-#     'set_placeholder': False,
-}
-
 DATABASES['default'] = dj_database_url.config(conn_max_age=600)
