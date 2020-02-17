@@ -25,10 +25,14 @@ class TaskForm(forms.ModelForm):
 class SignUpForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['username', 'password1', 'password2',]
+        fields = ['username', 'password1', 'password2', ]
 
 
 class StatusForm(forms.ModelForm):
+
     class Meta:
         model = Status
         fields = ['status_value', ]
+        labels = {
+            'status_value': 'Status name',
+        }

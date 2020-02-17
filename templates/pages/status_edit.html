@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block title %}Edit{% endblock %}
+
+{% block content %}
+<div class="container justify-content-center">
+    <h3>Edit status</h3>
+    <form class="form-inline justify-content-center mt-5" method="post" >{% csrf_token %}
+        {% if form.errors %} {{ form.errors }} {% endif %}
+        {% bootstrap_field form.status_value layout="horizontal" size="small" horizontal_field_class='col-md-8 mx-2' show_label=False set_placeholder=False show_help=False %}
+        <button type="submit" class="btn btn-success">Done</button>
+    </form>
+    <a href="{% url 'mainpage:home'%}" class="btn btn-secondary mt-5" role="button">Back</a>
+</div>
+
+{% endblock %}

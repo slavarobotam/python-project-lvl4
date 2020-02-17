@@ -77,6 +77,17 @@ version = "1.1.1"
 beautifulsoup4 = "*"
 
 [[package]]
+category = "main"
+description = "Django-filter is a reusable Django application for allowing users to filter querysets dynamically."
+name = "django-filter"
+optional = false
+python-versions = ">=3.4"
+version = "2.2.0"
+
+[package.dependencies]
+Django = ">=1.11"
+
+[[package]]
 category = "dev"
 description = "Discover and load entry points from installed packages."
 name = "entrypoints"
@@ -253,7 +264,7 @@ version = "5.0.1"
 brotli = ["brotli"]
 
 [metadata]
-content-hash = "c6a9c41337d57d9c02a0844719d60900083bec34474daa7e2d6e01bbb0677599"
+content-hash = "d471d244516928691a413c294b0e59e87cd1ceb62536f9c75b1fbf3cdabd7fcc"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -285,6 +296,10 @@ django = [
 django-bootstrap4 = [
     {file = "django-bootstrap4-1.1.1.tar.gz", hash = "sha256:39f97cbce85eb66f6d76be2029bae171bd3863d0c6932b1c2dae7f299c569b90"},
     {file = "django_bootstrap4-1.1.1-py3-none-any.whl", hash = "sha256:0fcd84f8414a58b43df0b331c00c8b2f1786ae28f75f419b4d33b06fca43e0d1"},
+]
+django-filter = [
+    {file = "django-filter-2.2.0.tar.gz", hash = "sha256:c3deb57f0dd7ff94d7dce52a047516822013e2b441bed472b722a317658cfd14"},
+    {file = "django_filter-2.2.0-py3-none-any.whl", hash = "sha256:558c727bce3ffa89c4a7a0b13bc8976745d63e5fd576b3a9a851650ef11c401b"},
 ]
 entrypoints = [
     {file = "entrypoints-0.3-py2.py3-none-any.whl", hash = "sha256:589f874b313739ad35be6e0cd7efde2a4e9b6fea91edcc34e58ecbb8dbe56d19"},

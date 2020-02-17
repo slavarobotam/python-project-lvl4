@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # Third party apps
     'whitenoise.runserver_nostatic',
     'bootstrap4',
+    'django_filters',
 
     # Default django apps
     'django.contrib.admin',
@@ -195,5 +196,9 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
+BOOTSTRAP4 = {
+    'horizontal_field_class': 'col-md-3',
+    'horizontal_label_class': 'col-md-3 align-middle text-right justify-content-center',
+    'set_placeholder': False,
+}
 DATABASES['default'] = dj_database_url.config(conn_max_age=600)

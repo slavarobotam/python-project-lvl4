@@ -1,34 +1,53 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block title %} HOME {% endblock %} 
+{% block content %}
 
-  <h1>Tasks for today</h1>
-  <br>
-  <div class="div div-hover div-dark">
-    
-    <div class="row mb-2 justify-content-center font-weight-bold text-left position-relative">
-      <!--  <div class="col">#</div> --> 
-      <div class="col-sm-2 position-static">Name</div>
-      <div class="col-sm-3">Description</div>
-      <div class="col-sm">Status</div>
-      <div class="col-sm">Creator</div>
-      <div class="col-sm">Assigned</div>
-      <div class="col-sm-2">Tags</div>
-    </div>
-  
-  
-      {% for task in tasks %}
-      <div class="row row-hover justify-content-center text-left position-relative">
-          <!-- <div class="col">{{ forloop.counter }}</div> -->
-          <div class="col-sm-2 position-static"><a class="stretched-link" href="{{ task.get_absolute_url }}">
-              {{ task.name|truncatewords:7 }}</a></div>
-          <div class="col-sm-3">{{ task.description|truncatewords:5|linebreaks }}</div>
-          <div class="col-sm">{{ task.status }}</div>
-          <div class="col-sm">{{ task.creator }}</div>
-          <div class="col-sm">{{ task.assigned_to }}</div>
-          <div class="col-sm-2">{{ task.tags.all|join:", " }}</div>
-      
+
+
+<form method="get" action="">
+    <div class="form-row ">
+        <div class="col">
+            {% bootstrap_field filter.form.status  %} 
+        </div>
+        <div class="col">
+            {% bootstrap_field filter.form.creator %}
+        </div>
+        <div class="col">
+            {% bootstrap_field filter.form.assigned_to %}
+        </div>
+        <div class="col">
+            {% bootstrap_field filter.form.tags %}
+        </div>
       </div>
-      {% endfor %}
-  
-</div>
-  <p class="lead">
-    <a href="{% url 'mainpage:new_task'%}" class="btn btn-lg btn-secondary">Add new</a>
-  </p>
+      <button type="submit" class="btn btn-primary col-md-2 mr-2">Show</button>
+      <a class="btn btn-secondary col-md-2" href="{% url 'mainpage:home' %}">Reset</a>
+</form>
+
+
+    <div class="div div-hover div-dark mt-5">
+        <div class="row mb-2 justify-content-center border-bottom border-secondary  font-weight-bold text-left position-relative">
+        
+                    <div class="col-sm-2 position-static">Name</div>
+                    <div class="col-sm-3">Description</div>
+                    <div class="col-sm">Status</div>
+                    <div class="col-sm">Creator</div>
+                    <div class="col-sm">Assigned</div>
+                    <div class="col-sm-2">Tags</div>
+        </div>
+    </div>
+    
+    {% for task in filter.qs %}
+    <div class="row row-hover justify-content-center text-left position-relative">
+            <div class="col-sm-2 position-static"><a class="stretched-link text-decoration-none" href="{{ task.get_absolute_url }}">
+                {{ task.name|truncatewords:7 }}</a></div>
+            <div class="col-sm-3">{{ task.description|truncatewords:10|linebreaks }}</div>
+            <div class="col-sm">{{ task.status }}</div>
+            <div class="col-sm">{{ task.creator }}</div>
+            <div class="col-sm">{{ task.assigned_to }}</div>
+            <div class="col-sm-2">{{ task.tags.all|join:", " }}</div>
+    </div>
+    {% endfor %}
+
+    <p><a href="{% url 'mainpage:new_task'%}" class="btn btn-lg btn-success mt-4">Add new</a></p>
+{% endblock %}

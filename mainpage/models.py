@@ -6,6 +6,10 @@ from django.urls import reverse
 class Status(models.Model):
     status_value = models.CharField(max_length=100)
     objects = models.Manager()
+    CHOICES = {
+        'new': 'new',
+        'start': 'start',
+    }
 
     def __str__(self):
         return self.status_value
@@ -13,6 +17,7 @@ class Status(models.Model):
 
 class Tag(models.Model):
     name = models.CharField(max_length=50, unique=True)
+    objects = models.Manager()
 
     def __str__(self):
         return self.name
@@ -22,6 +27,7 @@ class Task(models.Model):
     name = models.CharField(max_length=50, unique=True)
     description = models.TextField(default='To do:')
     status = models.ForeignKey(Status,
+                               default=1,
                                on_delete=models.CASCADE,
                                related_name='statuses')
     creator = models.ForeignKey(User,

@@ -1,40 +1,68 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from mainpage.forms import TaskForm, SignUpForm, StatusForm
-from mainpage.models import Task, Status
-from django.contrib.auth import login, authenticate
-from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
+from django.shortcuts import get_object_or_404, redirect, render
+from django_filters.views import FilterView
+
+from mainpage.filters import TaskFilter
+from mainpage.forms import SignUpForm, StatusForm, TaskForm
+from mainpage.models import Status, Tag, Task
 
 
 def contact(request):
     return render(request, 'pages/contact.html')
 
 
-def statuses(request):
+def settings(request):
     statuses = Status.objects.all()
     form = StatusForm()
-    return render(request, 'pages/statuses.html', {'statuses': statuses, 'form': form})
+    return render(request,
+                  'pages/settings.html',
+                  {'statuses': statuses, 'form': form})
 
 
 def create_status(request):
     form = StatusForm(request.POST or None)
     if form.is_valid():
         form.save()
-        return redirect('/statuses/')
-    return render(request, 'pages/statuses.html', {'form': form})
+        return redirect('/settings/')
+    return render(request, 'pages/settings.html', {'form': form})
 
 
 def delete_status(request, pk):
     status = get_object_or_404(Status, pk=pk)
     if request.method == 'POST':
         status.delete()
-        return redirect('/statuses/')
-    return render(request, 'pages/statuses.html', {'object': status})
+        return redirect('/settings/')
+    return render(request, 'pages/settings.html', {'object': status})
 
 
-@login_required(login_url='/accounts/login/')
-def home(request):
-    tasks = Task.objects.all()
-    return render(request, 'home.html', {'tasks': tasks})
+def update_status(request, pk, template_name='pages/status_edit.html'):
+    status = get_object_or_404(Status, pk=pk)
+    form = StatusForm(request.POST or None, instance=status)
+    if form.is_valid():
+        status = form.save()
+        status.save()
+        messages.success(request, "You successfully updated the status")
+        return redirect('/settings/')
+    return render(request, template_name, {'form': form})
+
+
+class TaskList(FilterView):
+    model = Task
+    filter_class = TaskFilter
+    context_object_name = 'tasks'
+    filter_class = TaskFilter
+    template_name = 'task_list.html'
+
+
+def BootstrapFilterView(request):
+    qs = filter(request)
+    context = {
+        'queryset': qs,
+        'tags': Tag.objects.all(),
+        'statuses': Status.objects.all(),
+    }
+    return render(request, 'home.html', context)
 
 
 def view_task(request, pk):
