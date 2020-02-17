@@ -1,7 +1,8 @@
 from django import forms
-from mainpage.models import Task, Status
-from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+
+from mainpage.models import Status, Task
 
 
 class TaskForm(forms.ModelForm):

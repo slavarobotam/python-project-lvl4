@@ -1,5 +1,6 @@
 from django.contrib import admin
-from mainpage.models import Task, Tag, Status
+
+from mainpage.models import Status, Tag, Task
 
 
 @admin.register(Task)

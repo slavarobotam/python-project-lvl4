@@ -10,9 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 import os
-import dj_database_url
-from dotenv import load_dotenv, find_dotenv
 
+import dj_database_url
+from dotenv import find_dotenv, load_dotenv
 
 load_dotenv(find_dotenv())
 
@@ -198,7 +198,8 @@ LOGOUT_REDIRECT_URL = '/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 BOOTSTRAP4 = {
     'horizontal_field_class': 'col-md-3',
-    'horizontal_label_class': 'col-md-3 align-middle text-right justify-content-center',
+    'horizontal_label_class': 'col-md-3 align-middle text-right'
+                              'justify-content-center',
     'set_placeholder': False,
 }
 DATABASES['default'] = dj_database_url.config(conn_max_age=600)
