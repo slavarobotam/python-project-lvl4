@@ -5,14 +5,13 @@
 
 
 
-<form method="get" action="">
+
+    <form method="get" action="">
     <div class="form-row ">
         <div class="col">
-            {% bootstrap_field filter.form.status  %} 
+            {% bootstrap_field filter.form.status %} 
         </div>
-        <div class="col">
-            {% bootstrap_field filter.form.creator %}
-        </div>
+
         <div class="col">
             {% bootstrap_field filter.form.assigned_to %}
         </div>
@@ -20,10 +19,16 @@
             {% bootstrap_field filter.form.tags %}
         </div>
       </div>
-      <button type="submit" class="btn btn-primary col-md-2 mr-2">Show</button>
-      <a class="btn btn-secondary col-md-2" href="{% url 'mainpage:home' %}">Reset</a>
-</form>
+      
+    <div class="form-row justify-content-center">
+        <button class="btn btn-primary col-md-2 mr-2" type="submit" >Show</button>
+        <a class="btn btn-primary col-md-2 mr-2" href="{% url 'mainpage:home' %}">Reset</a></div>
+    </form>
+    
+  
 
+ <form action="{% url 'mainpage:mytasks' %}" method='GET'>
+    <button class="btn btn-success col-md-2 mr-2 mt-3" type='submit'>my tasks</button></form>
 
     <div class="div div-hover div-dark mt-5">
         <div class="row mb-2 justify-content-center border-bottom border-secondary  font-weight-bold text-left position-relative">
@@ -36,7 +41,7 @@
                     <div class="col-sm-2">Tags</div>
         </div>
     </div>
-    
+
     {% for task in filter.qs %}
     <div class="row row-hover justify-content-center text-left position-relative">
             <div class="col-sm-2 position-static"><a class="stretched-link text-decoration-none" href="{{ task.get_absolute_url }}">

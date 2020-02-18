@@ -1,7 +1,7 @@
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
 
-from mainpage.views import TaskList
+# from mainpage.views import TaskList
 
 from . import views
 
@@ -19,7 +19,9 @@ urlpatterns = [
     path('tasks/new', views.create_task, name='new_task'),
     path('tasks/<int:pk>/edit/', views.update_task, name='edit_task'),
     path('tasks/<int:pk>/delete/', views.delete_task, name='delete_task'),
-    path('', TaskList.as_view(), name='home'),
+    # path('', TaskList.as_view(), name='home'),
+    path('tasks/my/', views.sort_btn, name='mytasks'),
+    path('', views.task_list, name='home'),
     path('signup/', views.signup, name='signup'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('login/', auth_views.LoginView.as_view(

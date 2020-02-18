@@ -41,7 +41,7 @@
     </form>
     <!-- Logout -->
     <div class="row justify-content-center p-1">
-        <p class="text-muted mt-5">You can also <u><a class="text-muted" href="{% url 'logout' %}">logout</a></u></p>
+        <p class="text-muted mt-5">If you are not {{ request.user }}, you can <u><a class="text-muted" href="{% url 'logout' %}">logout</a></u></p>
         
     </div>
 

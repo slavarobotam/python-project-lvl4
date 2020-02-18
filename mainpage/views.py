@@ -47,22 +47,36 @@ def update_status(request, pk, template_name='pages/status_edit.html'):
     return render(request, template_name, {'form': form})
 
 
-class TaskList(FilterView):
-    model = Task
-    filter_class = TaskFilter
-    context_object_name = 'tasks'
-    filter_class = TaskFilter
-    template_name = 'task_list.html'
+def task_list(request):
+    
+    f = TaskFilter(request.GET, queryset=Task.objects.all())
+    return render(request, 'task_list.html', {'filter': f})
 
 
-def BootstrapFilterView(request):
-    qs = filter(request)
-    context = {
-        'queryset': qs,
-        'tags': Tag.objects.all(),
-        'statuses': Status.objects.all(),
-    }
-    return render(request, 'home.html', context)
+def sort_btn(request):
+    user = request.user
+    f = TaskFilter(request.GET, queryset=Task.objects.filter(assigned_to=user))
+    return render(request, 'task_list.html', {'filter': f})
+
+# class TaskList(FilterView):
+#     model = Task
+#     filter_class = TaskFilter
+#     context_object_name = 'tasks'
+#     filter_class = TaskFilter
+#     template_name = 'task_list.html'
+    # def get_context_data(self, **kwargs):
+    #     context = super(MyPost, self).get_context_data(**kwargs)
+    #     context['post'] = Post.objects.filter(live=True, user=self.request.user)  # used self for object reference
+    #     return context
+
+# def BootstrapFilterView(request):
+#     qs = filter(request)
+#     context = {
+#         'queryset': qs,
+#         'tags': Tag.objects.all(),
+#         'statuses': Status.objects.all(),
+#     }
+#     return render(request, 'home.html', context)
 
 
 def view_task(request, pk):

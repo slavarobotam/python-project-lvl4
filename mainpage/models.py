@@ -39,7 +39,7 @@ class Task(models.Model):
     tags = models.ManyToManyField(Tag,
                                   related_name='tags')
     objects = models.Manager()
-
+    
     def get_absolute_url(self):
         return reverse('mainpage:view_task', kwargs={"pk": self.pk})
 
