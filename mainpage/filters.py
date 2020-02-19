@@ -19,7 +19,8 @@ def assigned_task(request):
 
 
 class TaskFilter(django_filters.FilterSet):
-    status = django_filters.ModelChoiceFilter(empty_label='All statuses', field_name='status', queryset=Status.objects.all())
+    status = django_filters.ModelChoiceFilter(empty_label='All statuses', queryset=Status.objects.all())
+
     # my_tasks = django_filters.BooleanFilter(
     #     label="Мои задачи",
     #     method='my_task_filter',
@@ -43,7 +44,7 @@ class TaskFilter(django_filters.FilterSet):
     class Meta:
         model = Task
         fields = [
-                  'status',
+                #   'status',
                 #   'userr',
                 #   'assigned_to',
                 #   'tags',

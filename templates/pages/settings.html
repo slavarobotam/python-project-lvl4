@@ -6,14 +6,14 @@
 <main role="main" class="inner cover">
     <!-- Showing list of statuses -->
     {% if statuses %}
-    <div class="container justify-content-center">
+    <div class="container">
         <h3>Edit statuses</h3>
         <div class="row justify-content-center p-1">
             <p class="mb-2">Here you can edit, delete and create new statuses</p>
         </div>
             {% for status in statuses %}
             <div class="row justify-content-center p-1">
-                <div class="col-lg-2 mr-2">{{ status.status_value }}</div>
+                <div class="col-lg-2 mr-2 text-right">{{ status.status_value }}</div>
 
                 <div class="col-lg-1 mr-2"><form action="{% url 'mainpage:edit_status' status.id %}"  method="post" >
                     {% csrf_token %}
@@ -32,7 +32,7 @@
     <!-- Create new status -->
     <form action="{% url 'mainpage:create_status' %}" class="form-inline justify-content-center mt-4" method="post" >{% csrf_token %}
         {% if form.errors %} {{ form.errors }} {% endif %}
-        {% bootstrap_label "Add new:" label_for="status_value" label_class="col-md-2 text-right" %} 
+        {% bootstrap_label "Add new:" label_for="status_value" label_class="col-md-2 " %} 
         {% bootstrap_field form.status_value layout="horizontal" size="small" horizontal_field_class='col-md-8 mx-2' show_label=False set_placeholder=False show_help=False %}
         <button type="submit" class="btn btn-success">Create</button>
     </form>

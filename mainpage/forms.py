@@ -6,6 +6,7 @@ from mainpage.models import Status, Task
 
 
 class TaskForm(forms.ModelForm):
+    
     class Meta:
         model = Task
         fields = ['name',
@@ -37,3 +38,5 @@ class StatusForm(forms.ModelForm):
         labels = {
             'status_value': 'Status name',
         }
+
+

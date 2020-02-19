@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block title %} HOME {% endblock %} 
+{% block content %}
+
+
+
+      <form method="GET" action=".">
+        
+        <div class="form-inline justify-content-center mt-3">
+
+            <div class="col-2 mr-2">
+                
+                <select id="assigned_to" class="form-control mx-2" name="assigned_to">
+                <option selected>Assigned to</option>
+                {% for user in users %}
+                <option value="{{ user }}">{{ user }}</option>
+                {% endfor %}
+                </select>
+            </div>
+            <div class="col-2 mr-2">
+
+                <select id="status" class="form-control mx-2" name="status">
+                <option selected>Status</option>
+                {% for status in statuses %}
+                <option value="{{ status }}">{{ status }}</option>
+                {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-2 mr-2">
+
+                <select id="tag" class="form-control mx-2" name="tag">
+                <option selected>Tag</option>
+                {% for tag in tags %}
+                <option value="{{ tag }}">{{ tag }}</option>
+                {% endfor %}
+                </select>
+            </div>
+            <button class="btn btn-info col-2 mx-2" type="submit" >Show</button>
+            <a class="btn btn-info col-2 ml-2" href="{% url 'mainpage:home' %}">Reset</a>
+        </div>
+
+
+            <div class="row justify-content-center mt-3">
+                <button name='mytasks' action="{% url 'mainpage:mytasks' %}" class="btn btn-primary mr-3" type='submit'>My tasks</button>
+                <a href="{% url 'mainpage:new_task'%}" class="btn btn-success mr-1">Add new</a>
+            </div>
+        
+   
+        
+      </form>
+  
+    <div class="div div-hover div-dark mt-4">
+        <div class="row mb-4 justify-content-center border-bottom border-secondary text-left">
+        
+                    <div class="col-2 mr-1">Name</div>
+                    <div class="col-4 mr-1">Description</div>
+                    <div class="col-1 mr-1">Status</div>
+                    <div class="col-1 mr-1">Creator</div>
+                    <div class="col-1 mr-2">Assigned</div>
+                    <div class="col-1 mr-1">Tags</div>
+        </div>
+    </div>
+   
+    {% for task in queryset %}
+    
+    <div class="row row-hover mb-2 justify-content-center text-left position-relative">
+            <div class="col-2 mr-1 position-static"><a class="stretched-link text-decoration-none" href="{{ task.get_absolute_url }}">
+                {{ task.name|truncatewords:7 }}</a></div>
+            <div class="col-4 mr-1 ">{{ task.description|truncatewords:10|linebreaks }}</div>
+            <div class="col-1 mr-1">{{ task.status }}</div>
+            <div class="col-1 mr-1 ">{{ task.creator }}</div>
+            <div class="col-1 mr-2 ">{{ task.assigned_to }}</div>
+            <div class="col-1 mr-1">{{ task.tags.all|join:", " }}</div>
+    
+    </div>
+    {% endfor %}
+
+
+
+ 
+
+{% endblock %}

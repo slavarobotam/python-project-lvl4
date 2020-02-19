@@ -1,17 +1,59 @@
 {% extends "base.html" %}
-
-{% block title %}Delete{% endblock %}
+{% load bootstrap4 %}
+{% block title %}Edit{% endblock %}
 
 {% block content %}
 <h1>Edit task</h1>
-<br>
-<form method="post" style="text-align: left">{% csrf_token %}
-    <table>
-        {{ form.as_table }}
-        </table>
-
-    <p style="text-align: center"><input type="submit" class="btn btn-lg btn-secondary" value="Save"/>
-        <a href="{% url 'mainpage:home'%}" class="btn btn-lg btn-secondary" role="button">Back</a>
-    
-</form>
+    <form method="post" class="text-left" novalidate>{% csrf_token %}
+        {% if form.errors %} {{ form.errors }} {% endif %}
+        <div class="form-group">
+            <label for="name">Task name</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ form.name.value }}">
+        </div>
+        <div class="form-row mt-2">
+            <div class="col-10">
+                <label for="description">Description</label>
+                <textarea class="form-control" id="description" rows="12" name="description">{{ form.description.value }}</textarea>
+            </div>
+            <div class="col-2">
+                <label for="tags">Tags</label>
+                <select multiple class="form-control" size="15" name="tags" >
+                    {% for tags in form.tags %}
+                    {{ tags }}
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="form-row mt-2">
+            <div class="col">
+                <label for="status">Status</label>
+                <select id="status" class="form-control" name="status">
+                    <option selected>Choose...</option>
+                    {% for status in form.status %}
+                    {{ status }}
+                    {% endfor %}
+                </select>
+                </div>
+            <div class="col">
+                    <label for="creator">Creator</label>
+                    <select id="creator" class="form-control" name="creator">
+                        <option selected>Choose...</option>
+                        {% for creator in form.creator %}
+                        {{ creator }}
+                        {% endfor %}
+                    </select>
+            </div>
+            <div class="col">
+                    <label for="assigned_to">Assigned to</label>
+                    <select id="assigned_to" class="form-control" name="assigned_to">
+                        <option selected>Choose...</option>
+                        {% for assigned_to in form.assigned_to %}
+                        {{ assigned_to }}
+                        {% endfor %}
+                    </select>
+            </div>
+        </div>
+        <p style="text-align: center"><input type="submit" class="btn btn-lg btn-success mt-4" value="Save"/>
+            <a href="{% url 'mainpage:home'%}" class="btn btn-lg btn-secondary mt-4" role="button">Back</a>
+    </form>
 {% endblock %}

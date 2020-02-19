@@ -6,11 +6,6 @@ from django.urls import reverse
 class Status(models.Model):
     status_value = models.CharField(max_length=100)
     objects = models.Manager()
-    CHOICES = {
-        'new': 'new',
-        'start': 'start',
-    }
-
     def __str__(self):
         return self.status_value
 
@@ -32,7 +27,7 @@ class Task(models.Model):
                                related_name='statuses')
     creator = models.ForeignKey(User,
                                 on_delete=models.CASCADE,
-                                related_name='tasks')
+                                related_name='creator')
     assigned_to = models.ForeignKey(User,
                                     on_delete=models.CASCADE,
                                     related_name='assigned_to')
