@@ -6,6 +6,7 @@ from django.urls import reverse
 class Status(models.Model):
     status_value = models.CharField(max_length=100)
     objects = models.Manager()
+
     def __str__(self):
         return self.status_value
 
@@ -32,9 +33,10 @@ class Task(models.Model):
                                     on_delete=models.CASCADE,
                                     related_name='assigned_to')
     tags = models.ManyToManyField(Tag,
+                                  default=1,
                                   related_name='tags')
     objects = models.Manager()
-    
+
     def get_absolute_url(self):
         return reverse('mainpage:view_task', kwargs={"pk": self.pk})
 

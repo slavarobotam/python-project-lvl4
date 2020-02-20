@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block title %} HOME {% endblock %} 
+{% block content %}
+
+<main role="main" class="inner cover">
+
+    <!-- Filters -->
+    <form method="GET" class="form-inline justify-content-center mt-3" action=".">
+        
+            
+            <select id="assigned_to" class="form-control col-2 mr-2" name="assigned_to">
+                <option selected>Assigned to</option>
+                {% for user in users %}
+                <option value="{{ user }}">{{ user }}</option>
+                {% endfor %}
+            </select>
+            <select id="status" class="form-control col-2 mr-2" name="status">
+                <option selected>Status</option>
+                {% for status in statuses %}
+                <option value="{{ status }}">{{ status }}</option>
+                {% endfor %}
+            </select>
+            <select id="tag" class="form-control col-2 mr-2" name="tag">
+                <option selected>Tag</option>
+                {% for tag in tags %}
+                <option value="{{ tag }}">{{ tag }}</option>
+                {% endfor %}
+            </select>
+            <button class="btn btn-primary mr-2" type="submit" >Apply</button>
+            <button name='reset' class="btn btn-info col-1" type='submit'>Reset</button></form>
+    </form>
+
+    <!-- Buttons "My tasks" and "Add new" -->
+    <div class="row justify-content-center my-3">
+        <form method="GET" action=".">
+            <button name='mytasks' class="btn btn-primary mr-2" type='submit'>My tasks</button>
+        </form>
+        <form method="GET" action="{% url 'mainpage:new_task' %}">
+            <button name='newtask' action="{% url 'mainpage:new_task' %}" class="btn btn-success mr-3" type='submit'>Add new</button>
+        </form>
+    </div>
+
+    <!-- Head of task container -->
+    <div class="row my-2 border-bottom border-secondary text-left">
+        <div class="col-1 ">Tags</div>
+        <div class="col-3 ">Name</div>
+        <div class="col-5 ">Description</div>
+        <div class="col-1 ">Status</div>
+        <div class="col-1 ">Creator</div>
+        <div class="col-1">Assigned</div>
+    </div>
+
+    <!-- Tasks -->
+        {% for task in queryset %}
+            <div class="row row-hover mb-2 text-left position-relative">
+                    <div class="col-1 ">{{ task.tags.all|join:", "|truncatewords:3 }}</div>
+                    <div class="col-3 position-static"><a class="stretched-link text-decoration-none" href="{{ task.get_absolute_url }}">
+                        {{ task.name|truncatewords:10  }}</a></div>
+                    <div class="col-5 ">{{ task.description|truncatewords:15|linebreaks }}</div>
+                    <div class="col-1 text-truncate">{{ task.status }}</div>
+                    <div class="col-1 text-truncate ">{{ task.creator }}</div>
+                    <div class="col-1  text-truncate">{{ task.assigned_to }}</div>
+            </div>
+        {% endfor %}
+
+</main>
+{% endblock %}
