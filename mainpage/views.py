@@ -8,13 +8,17 @@ from django.contrib.auth.models import User
 
 def home(request, template_name='tasks/home.html'):
     query_set = query_filter(request)
+    next = request.POST.get('next', '/')
     context = {
         'queryset': query_set,
         'statuses': Status.objects.all(),
         'tags': Tag.objects.all(),
         'tasks': Task.objects.all(),
-        'users': User.objects.all()
+        'users': User.objects.all(),
+        'next': next
     }
+    if 'newtask' in request.GET:
+        return redirect('/tasks/new')
     return render(request, template_name, context)
 
 
@@ -96,15 +100,15 @@ def update_task(request, pk, template_name='tasks/task_form.html'):
     return render(request, template_name, {'form': form, 'task': task})
 
 
-def create_task(request, template_name='tasks/task_form.html'):
-    user = request.user
+def create_task(request, template_name='tasks/new_task.html'):
     form = TaskForm(request.POST or None,
-                    initial={'name': 'Task',
-                             'creator': user,
-                             'assigned_to': user})
+                    initial={'name': Task.random_taskname(),
+                             'creator': request.user,
+                             'assigned_to': request.user})
     if form.is_valid():
         form.save()
         return redirect('/')
+
     return render(request, template_name, {'form': form})
 
 

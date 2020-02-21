@@ -3,31 +3,24 @@
 {% block title %}Settings{% endblock %}
 
 {% block content %}
-<main role="main" class="inner cover">
+<h1>Settings</h1>
     <!-- Showing list of statuses -->
     {% if statuses %}
-    <div class="container">
-        <h3>Edit statuses</h3>
-        <div class="row justify-content-center p-1">
-            <p class="mb-2">Here you can edit, delete and create new statuses</p>
-        </div>
-            {% for status in statuses %}
-            <div class="row justify-content-center p-1">
-                <div class="col-lg-2 mr-2 text-right">{{ status.status_value }}</div>
+        <h3 class="my-2">Edit, delete and create new statuses</h3>
+        {% for status in statuses %}
+        <div class="row justify-content-center my-2">
+            <div class="col-1 text-center  mr-2 p-0">{{ status.status_value }}</div>
 
-                <div class="col-lg-1 mr-2"><form action="{% url 'mainpage:edit_status' status.id %}"  method="post" >
-                    {% csrf_token %}
-                    <a href="{% url 'mainpage:edit_status' status.id %}" class="btn btn-sm btn-outline-primary" role="button">Edit</a>
-                </form></div>
-                
-                <div class="col-lg-1"><form action="{% url 'mainpage:delete_status' status.id %}"  method="post" >
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-sm  btn-outline-danger">Delete</button>
-                    </form></div>
-                </div>
-            {% endfor %}
+            <form  action="{% url 'mainpage:edit_status' status.id %}" class="col-1 p-0" method="get" >{% csrf_token %}
+                <button  type="submit" class="btn btn-sm btn-outline-primary mr-2">Edit</button>
+            </form>
+            <form action="{% url 'mainpage:delete_status' status.id %}" class="col-1 p-0" method="post" >{% csrf_token %}
+                <button  type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+            </form>
         </div>
+        {% endfor %}
     {% endif %}
+
 
     <!-- Create new status -->
     <form action="{% url 'mainpage:create_status' %}" class="form-inline justify-content-center mt-4" method="post" >{% csrf_token %}
@@ -45,5 +38,5 @@
         
     </div>
 
-</main>
+
 {% endblock %}

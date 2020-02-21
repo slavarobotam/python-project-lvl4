@@ -20,7 +20,7 @@ class Tag(models.Model):
 
 
 class Task(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50)
     description = models.TextField(default='To do:')
     status = models.ForeignKey(Status,
                                default=1,
@@ -47,3 +47,13 @@ class Task(models.Model):
         return filter(
             None,
             (line.strip() for line in self.description.splitlines()))
+
+    def random_taskname():
+        while 1:
+            import random
+            ROUTINE_TASKS = [
+                'Go for a walk', 'Clean up a room', 'Read 30 min',
+                'Solve kata', 'Workout', 'Pat cat', 'Meditate',
+                'Stretching', 'Job searching'
+            ]
+            return random.choice(ROUTINE_TASKS)

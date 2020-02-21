@@ -1,11 +1,18 @@
 {% extends "base.html" %}
 
-{% block title %}Edit task{% endblock %}
+{% block title %}New task{% endblock %}
 
 {% block content %}
-<h1>Edit task</h1>
+<h1>New task</h1>
 <form method="post" class="text-left" novalidate>{% csrf_token %}
     {% if form.errors %} {{ form.errors }} {% endif %}
+    {% if form.errors %}
+    <ol>
+    {% for error in form.errors %}
+        <li><strong>{{ error|escape }}</strong></li>
+    {% endfor %}
+    </ol>
+    {% endif %}
     <div class="form-group">
         <label for="name">Task name</label>
         <input type="text" class="form-control" id="name" name="name" value="{{ form.name.value }}">
@@ -54,9 +61,12 @@
         </div>
     </div>
     <div class="row justify-content-center my-3">
-            <button name='mytasks' class="btn btn-lg btn-success mr-2" type='submit'>Save</button>
-            <button name='back' action="{% url 'mainpage:home'%}" class="btn btn-lg btn-secondary" type='submit'>Back</button>
 
+        <button  class="btn btn-lg btn-success mr-2" type='submit'>Save</button>
+        <button action="{% url 'mainpage:home'%}" class="btn btn-lg btn-secondary" type='submit'>Back</button>
     </div>
 </form>
+
+
+
 {% endblock %}
