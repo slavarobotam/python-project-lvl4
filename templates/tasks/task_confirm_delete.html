@@ -6,8 +6,8 @@
 <form method="post">{% csrf_token %}
     <h4>Do you really want to delete "{{ object }}"? </h4>
     <br><br>
-    <p><input type="submit" class="btn btn-lg btn-success" value="Yes"/>
-    <a href="{% url 'mainpage:home' %}" class="btn btn-lg btn-danger" role="button">No</a>
+    <p><input type="submit" class="btn btn-success" value="Yes"/>
+    <a href="{% url 'mainpage:home' %}" class="btn btn-danger" role="button">No</a>
 
 </form>
 {% endblock %}

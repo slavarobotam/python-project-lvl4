@@ -42,13 +42,13 @@
       <div class="row justify-content-center my-3">
             
             <form method="GET" action="{% url 'mainpage:edit_task' task.id %}">{% csrf_token %}
-                <button action="{% url 'mainpage:edit_task' task.pk %}" class="btn btn-lg  btn-success mr-2" type='submit'>Edit task</button>
+                <button action="{% url 'mainpage:edit_task' task.pk %}" class="btn btn-success mr-2" type='submit'>Edit task</button>
             </form>
             <form method="GET" action="{% url 'mainpage:delete_task' task.pk%}">{% csrf_token %}
-                <button class="btn btn-lg btn-danger mr-2" type='submit'>Delete</button>
+                <button class="btn btn-danger mr-2" type='submit'>Delete</button>
             </form>
             <form method="GET" action="{% url 'mainpage:home'%}">{% csrf_token %}
-                <button action="{% url 'mainpage:home'%}" class="btn btn-lg btn-secondary" type='submit'>Back</button>
+                <button action="{% url 'mainpage:home'%}" class="btn btn-secondary" type='submit'>Back</button>
             </form>
     </div>
   

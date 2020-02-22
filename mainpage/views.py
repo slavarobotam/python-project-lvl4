@@ -9,18 +9,22 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def home(request, template_name='home.html'):
-    query_set = query_filter(request)
-    next = request.POST.get('next', '/')
+    if 'newtask' in request.GET:
+        return redirect('/tasks/new')
+    if 'mytasks' in request.GET:
+        user = request.user
+        query_set = Task.objects.filter(assigned_to__username=user)
+    if 'reset' in request.GET:
+        query_set = Task.objects.all()
+    else:
+        query_set = query_filter(request)
     context = {
         'queryset': query_set,
         'statuses': Status.objects.all(),
         'tags': Tag.objects.all(),
         'tasks': Task.objects.all(),
         'users': User.objects.all(),
-        'next': next
     }
-    if 'newtask' in request.GET:
-        return redirect('/tasks/new')
     return render(request, template_name, context)
 
 
@@ -33,16 +37,11 @@ def query_filter(request):
     tag = request.GET.get('tag')
     status = request.GET.get('status')
     assigned_to = request.GET.get('assigned_to')
-    if 'mytasks' in request.GET:
-        user = request.user
-        qs = qs.filter(assigned_to__username=user)
-    if 'reset' in request.GET:
-        qs = Task.objects.all()
-    if is_valid_queryparam(status) and status != 'Status':
+    if is_valid_queryparam(status) and status != 'All statuses':
         qs = qs.filter(status__status_value=status)
-    if is_valid_queryparam(tag) and tag != 'Tag':
+    if is_valid_queryparam(tag) and tag != 'All tags':
         qs = qs.filter(tags__name=tag)
-    if is_valid_queryparam(assigned_to) and assigned_to != 'Assigned to':
+    if is_valid_queryparam(assigned_to) and assigned_to != 'Assigned to all':
         qs = qs.filter(assigned_to__username=assigned_to)
     return qs
 
@@ -97,15 +96,18 @@ def view_task(request, pk):
 def edit_task(request, pk, template_name='tasks/edit_task.html'):
     task = get_object_or_404(Task, pk=pk)
     form = TaskForm(request.POST or None, instance=task)
+    if 'back' in request.POST:
+        return redirect('/')
     if form.is_valid():
         form.save()
-        return render(request, 'view_task.html', {'task': task, 'form': form})
+        return redirect('/')
     return render(request, template_name, {'form': form, 'task': task})
 
 
 def create_task(request, template_name='tasks/new_task.html'):
     form = TaskForm(request.POST or None,
                     initial={'name': Task.random_taskname(),
+                             'description': '',
                              'creator': request.user,
                              'assigned_to': request.user})
     if form.is_valid():

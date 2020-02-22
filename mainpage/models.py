@@ -21,7 +21,7 @@ class Tag(models.Model):
 
 class Task(models.Model):
     name = models.CharField(max_length=50)
-    description = models.TextField(default='To do:')
+    description = models.TextField(blank=True)
     status = models.ForeignKey(Status,
                                default=1,
                                on_delete=models.CASCADE,

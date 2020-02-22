@@ -28,7 +28,6 @@
         <div class="col">
             <label for="status">Status</label>
             <select id="status" class="form-control" name="status">
-                <option selected>Choose...</option>
                 {% for status in form.status %}
                 {{ status }}
                 {% endfor %}
@@ -37,7 +36,6 @@
         <div class="col">
                 <label for="creator">Creator</label>
                 <select id="creator" class="form-control" name="creator">
-                    <option selected>Choose...</option>
                     {% for creator in form.creator %}
                     {{ creator }}
                     {% endfor %}
@@ -46,7 +44,6 @@
         <div class="col">
                 <label for="assigned_to">Assigned to</label>
                 <select id="assigned_to" class="form-control" name="assigned_to">
-                    <option selected>Choose...</option>
                     {% for assigned_to in form.assigned_to %}
                     {{ assigned_to }}
                     {% endfor %}
@@ -54,8 +51,8 @@
         </div>
     </div>
     <div class="row justify-content-center my-3">
-            <button name='mytasks' class="btn btn-lg btn-success mr-2" type='submit'>Save</button>
-            <button name='back' action="{% url 'mainpage:home'%}" class="btn btn-lg btn-secondary" type='submit'>Back</button>
+            <button class="btn btn-success mr-2" type='submit'>Save</button>
+            <button name='back' action="{% url 'mainpage:home' %}" class="btn btn-secondary" type='submit'>Back</button>
 
     </div>
 </form>
