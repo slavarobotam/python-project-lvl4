@@ -1,7 +1,6 @@
-from django.test import RequestFactory, TestCase, Client
+from django.test import TestCase
 from mainpage.models import Task, Status, Tag
 from django.contrib.auth.models import User
-from mainpage.forms import TaskForm
 
 
 # models test
