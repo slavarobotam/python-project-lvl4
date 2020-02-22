@@ -100,6 +100,7 @@ WSGI_APPLICATION = 'task_manager.wsgi.application'
 # }
 DATABASES = {}
 DATABASE_URL = os.getenv("DATABASE_URL")
+
 # DATABASES = {'default': dj_database_url.config(default=DATABASE_URL)}
 # conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 # Password validation
