@@ -98,9 +98,9 @@ WSGI_APPLICATION = 'task_manager.wsgi.application'
 #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
-DATABASES = {}
 
 DATABASE_URL = os.getenv("DATABASE_URL")
+
 # conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
