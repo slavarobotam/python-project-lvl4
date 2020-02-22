@@ -34,5 +34,5 @@ class StatusForm(forms.ModelForm):
         model = Status
         fields = ['status_value', ]
         labels = {
-            'status_value': 'Status name',
+            'status_value': 'Status',
         }

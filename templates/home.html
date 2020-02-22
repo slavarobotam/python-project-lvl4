@@ -6,11 +6,13 @@
 <main role="main" class="inner cover">
 
     <!-- Filters -->
-    <form method="GET" class="form-inline justify-content-center mt-3" action=".">
-        
-        {% if form.errors %} {{ form.errors }} {% endif %}
+    <form method="GET" class="mt-3" action=".">
+        <div class="row justify-content-center my-2">
             <button name='newtask' action="{% url 'mainpage:new_task' %}" class="btn btn-success mr-2" type='submit'>Add new</button>
             <button name='mytasks' class="btn btn-primary mr-2" type='submit'>My tasks</button>
+        </div>
+        {% if form.errors %} {{ form.errors }} {% endif %}
+        <div class="form-inline justify-content-center">
             <select id="assigned_to" class="form-control col-2 mr-2" name="assigned_to">
                 <option class="text-align-center" selected>Assigned to</option>
                 {% for user in users %}
@@ -29,11 +31,9 @@
                 <option value="{{ tag }}">{{ tag }}</option>
                 {% endfor %}
             </select>
-            <button class="btn btn-info mr-2" type="submit" >Apply</button>
-            <button name='reset' class="btn btn-warning mr-2" type='submit'>Reset</button>
-            
-            
-            
+                <button class="btn btn-info mr-2" type="submit" >Apply</button>
+                <button name='reset' class="btn btn-secondary mr-2" type='submit'>Reset</button>
+        </div>
     </form>
 
     <!-- Buttons "My tasks" and "Add new" -->

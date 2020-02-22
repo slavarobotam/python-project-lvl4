@@ -4,9 +4,11 @@ from django.shortcuts import get_object_or_404, redirect, render
 from mainpage.forms import SignUpForm, StatusForm, TaskForm
 from mainpage.models import Status, Tag, Task
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 
-def home(request, template_name='tasks/home.html'):
+@login_required
+def home(request, template_name='home.html'):
     query_set = query_filter(request)
     next = request.POST.get('next', '/')
     context = {
@@ -45,6 +47,7 @@ def query_filter(request):
     return qs
 
 
+@login_required
 def settings(request, template_name='pages/settings.html'):
     context = {
         'form': StatusForm(),
@@ -87,11 +90,11 @@ def view_task(request, pk):
     task = get_object_or_404(Task, pk=pk)
     form = TaskForm(request.POST or None, instance=task)
     return render(request,
-                  'view_task.html',
+                  'tasks/view_task.html',
                   {'task': task, 'form': form})
 
 
-def update_task(request, pk, template_name='tasks/task_form.html'):
+def edit_task(request, pk, template_name='tasks/edit_task.html'):
     task = get_object_or_404(Task, pk=pk)
     form = TaskForm(request.POST or None, instance=task)
     if form.is_valid():

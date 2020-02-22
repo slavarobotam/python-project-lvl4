@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% load bootstrap4 %}
 {% block title %}Settings{% endblock %}
-
 {% block content %}
 <h1>Settings</h1>
+
     <!-- Showing list of statuses -->
     {% if statuses %}
         <h3 class="my-2">Edit, delete and create new statuses</h3>
@@ -21,22 +21,19 @@
         {% endfor %}
     {% endif %}
 
-
     <!-- Create new status -->
     <form action="{% url 'mainpage:create_status' %}" class="form-inline justify-content-center mt-4" method="post" >{% csrf_token %}
-        {% if form.errors %} {{ form.errors }} {% endif %}
-        {% bootstrap_label "Add new:" label_for="status_value" label_class="col-md-2 " %} 
-        {% bootstrap_field form.status_value layout="horizontal" size="small" horizontal_field_class='col-md-8 mx-2' show_label=False set_placeholder=False show_help=False %}
-        <button type="submit" class="btn btn-success">Create</button>
+        <div class="form-group row">
+            <label for="newstatus" class="col-2 text-nowrap">Add new:</label>
+            {% bootstrap_field form.status_value layout="horizontal" size="small" horizontal_field_class='col-md-8 mx-3' show_label=False %}
+            <button type="submit" class="btn btn-success">Create</button>
+        </div>
     </form>
 
-
-    </form>
     <!-- Logout -->
-    <div class="row justify-content-center p-1">
+    <div class="row justify-content-center mt-3 p-1">
         <p class="text-muted mt-5">If you are not {{ request.user }}, you can <u><a class="text-muted" href="{% url 'logout' %}">logout</a></u></p>
         
     </div>
-
 
 {% endblock %}
