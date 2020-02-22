@@ -1,20 +1,23 @@
 env:
   global:
-    - CC_TEST_REPORTER_ID=d1c09e20447ae8db9c52cc5e8e6a8da876b2ffbb726f5b24f951e0ce8dc11367
+  - CC_TEST_REPORTER_ID=d1c09e20447ae8db9c52cc5e8e6a8da876b2ffbb726f5b24f951e0ce8dc11367
+  - secure: IXndon6rBmac6/n8dd/BQ2iqYOpEiQhaLPZLiiT2sxVf7Xa/0t/zAMMs0arli7Kc8NVUNRbuMu3wXlIQDqKUtG6IyOLXEi1/RRYTuxpWhuklSfQyWBWQMWYoSzuX8JcUUofC2HcNTbk3mU6cNYnHXfU5IfZ+AXjm8aa7IO0U7A4ZZMJDAzWDsoeMerKJNH2ewhNzilBQc750MEjsmY/BC21304Js9VP0iP4rrYxeFIWgdJyHjUxnfWUpSDYDmAOhk6vgz1HqVdsN4yApzhWcCOoLy8BWPtrrC2igp5+4ro4LrXrnSgScUV35bW1ySvcgoovOtKmNiOI9qMzKIL2aToUDV+zO1hfjHuQ9GEk2CyN7GKKZax3B0bb4dRKejkiHndj1YqcoZcK5m3u1vlygLAspiyzif5Z8Y3E5kw4PMgsfnUVdaeYZO1JKxp5mKC1SvHuDrHQfdVLwIiB00VRkDuYY/08DCL23SJrkhOIRb0n3fyhH6WusMiLjdESqWUscafVasO7cNFk6Gf3hwhSfUmff46Gxdlo42fzVKkzQGDVgEB1EhQ/lksN3n8KZjCpbg6e61/6OKkStYlLw13FF+t7kYDwnoyC8cnDmwU/nTfbsdPZ9NQ3pN7A1+AqJnc2JzDEfGvuipoDIH+KcIxCR36YJSeO8OspL1A8P9yjvANs=
 language: python
 python:
-  - "3.6"
+- '3.6'
 before_install:
-  - pip install poetry
+- pip install poetry
 install:
-  - make install
+- make install
 before_script:
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
+- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+  > ./cc-test-reporter
+- chmod +x ./cc-test-reporter
+- "./cc-test-reporter before-build"
 script:
-  - make lint
-  - make test
+- export SECRET_KEY=$SECRET_KEY
+- make lint
+- make test
 after_script:
-  - ./cc-test-reporter format-coverage -d -t coverage.py coverage.xml after-build $TRAVIS_TEST_RESULT
-  - if [[ "$TRAVIS_TEST_RESULT" == 0 ]]; then ./cc-test-reporter upload-coverage; fi 
+- "./cc-test-reporter format-coverage -d -t coverage.py coverage.xml after-build $TRAVIS_TEST_RESULT"
+- if [[ "$TRAVIS_TEST_RESULT" == 0 ]]; then ./cc-test-reporter upload-coverage; fi
