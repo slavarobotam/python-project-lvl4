@@ -48,7 +48,7 @@
                     <div class="col-1 ">{{ task.tags.all|join:", "|truncatewords:3 }}</div>
                     <div class="col-3 position-static"><a class="stretched-link text-decoration-none" href="{{ task.get_absolute_url }}">
                         {{ task.name|truncatewords:10  }}</a></div>
-                    <div class="col-5 ">{{ task.description|truncatewords:15|linebreaks }}</div>
+                    <div class="col-5 ">{{ task.description|linebreaks|truncatewords:15 }}</div>
                     <div class="col-1 text-truncate">{{ task.status }}</div>
                     <div class="col-1 text-truncate ">{{ task.creator }}</div>
                     <div class="col-1  text-truncate">{{ task.assigned_to }}</div>

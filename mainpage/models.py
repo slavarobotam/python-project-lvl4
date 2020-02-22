@@ -43,11 +43,6 @@ class Task(models.Model):
     def __str__(self):
         return self.name
 
-    def description_lines(self):
-        return filter(
-            None,
-            (line.strip() for line in self.description.splitlines()))
-
     def random_taskname():
         while 1:
             import random
