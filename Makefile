@@ -19,4 +19,5 @@ publish:
 	@poetry publish -r ott45
 
 test:
-	@poetry run ./manage.py test
+	@coverage run manage.py test -v 2
+

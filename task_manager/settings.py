@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'bootstrap4',
     'django_filters',
+    'coverage',
 
     # Default django apps
     'django.contrib.admin',
