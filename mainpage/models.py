@@ -4,11 +4,11 @@ from django.urls import reverse
 
 
 class Status(models.Model):
-    status_value = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
     objects = models.Manager()
 
     def __str__(self):
-        return self.status_value
+        return self.name
 
 
 class Tag(models.Model):

@@ -13,7 +13,7 @@ class TaskTest(TestCase):
         self.c = Client()
 
     def create_task(self, name="test name"):
-        some_status = Status.objects.create(status_value='New')
+        some_status = Status.objects.create(name='New')
         some_tag = Tag.objects.create(name='Test')
         some_task = Task.objects.create(name=name,
                                         assigned_to=self.user,
@@ -50,7 +50,7 @@ class TaskTest(TestCase):
         self.c.login(username='testuser', password='12345')
         response = self.c.get(reverse('mainpage:settings'))
         self.assertEqual(response.status_code, 200)
-        data = {"status_value": "newstatus"}
+        data = {"name": "newstatus"}
         data['user'] = self.user.id
         response = self.c.post(reverse('mainpage:create_status'), data)
         self.assertEqual(response.status_code, 302)

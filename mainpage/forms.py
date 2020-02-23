@@ -32,7 +32,7 @@ class SignUpForm(UserCreationForm):
 class StatusForm(forms.ModelForm):
     class Meta:
         model = Status
-        fields = ['status_value', ]
+        fields = ['name', ]
         labels = {
-            'status_value': 'Status',
+            'name': 'Status',
         }

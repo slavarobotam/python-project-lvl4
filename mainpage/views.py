@@ -38,7 +38,7 @@ def query_filter(request):
     status = request.GET.get('status')
     assigned_to = request.GET.get('assigned_to')
     if is_valid_queryparam(status) and status != 'All statuses':
-        qs = qs.filter(status__status_value=status)
+        qs = qs.filter(status__name=status)
     if is_valid_queryparam(tag) and tag != 'All tags':
         qs = qs.filter(tags__name=tag)
     if is_valid_queryparam(assigned_to) and assigned_to != 'Assigned to all':
