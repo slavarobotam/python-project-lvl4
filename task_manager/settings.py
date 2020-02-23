@@ -154,13 +154,17 @@ STATICFILES_DIRS = [
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+if not DEBUG:
+    ROLLBAR = {
+        'access_token': os.getenv("ACCESS_TOKEN"),
+        'environment': 'development' if DEBUG else 'production',
+        'branch': 'master',
+        'root': BASE_DIR,
+        'suppress_reinit_warning': True,
+    }
+    import rollbar
+    rollbar.init(**ROLLBAR)
 
-ROLLBAR = {
-    'access_token': os.getenv("ACCESS_TOKEN"),
-    'environment': 'development' if DEBUG else 'production',
-    'branch': 'master',
-    'root': BASE_DIR,
-}
 
 LOGGING = {
     'version': 1,
