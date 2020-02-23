@@ -3,16 +3,9 @@
 install:
 	@poetry install
 
-pip-install:
-	@pip install --user --index-url https://test.pypi.org/simple/ \
-		--extra-index-url https://pypi.org/simple/ slavarobotam_task_manager
-
-uninstall:
-	@pip uninstall slavarobotam_task_manager
-
 lint:
-	@poetry run flake8 --ignore=F401, E501\
-		--exclude .git,__pycache__,migrations
+	@poetry run flake8 \
+		--exclude .git,__pycache__,migrations,staticfiles
 
 publish:
 	@poetry build
