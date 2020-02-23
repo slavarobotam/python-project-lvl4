@@ -47,8 +47,8 @@ class Task(models.Model):
         while 1:
             import random
             ROUTINE_TASKS = [
-                'Go for a walk', 'Clean up a room', 'Read 30 min',
-                'Solve kata', 'Workout', 'Pat cat', 'Meditate',
-                'Stretching', 'Job searching'
+                'Go for a walk', 'Clean up something', 'Read 30 min',
+                'Solve kata', 'Do small workout', 'Pat cat',
+                'Straight your back', 'Make a stretch', 'Make coffee'
             ]
             return random.choice(ROUTINE_TASKS)

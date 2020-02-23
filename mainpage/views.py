@@ -11,11 +11,6 @@ from mainpage.models import Status, Tag, Task
 def home(request, template_name='home.html'):
     if 'newtask' in request.GET:
         return redirect('/tasks/new')
-    if 'mytasks' in request.GET:
-        user = request.user
-        query_set = Task.objects.filter(assigned_to__username=user)
-    if 'reset' in request.GET:
-        query_set = Task.objects.all()
     else:
         query_set = query_filter(request)
     context = {
@@ -43,6 +38,11 @@ def query_filter(request):
         qs = qs.filter(tags__name=tag)
     if is_valid_queryparam(assigned_to) and assigned_to != 'Assigned to all':
         qs = qs.filter(assigned_to__username=assigned_to)
+    if 'mytasks' in request.GET:
+        user = request.user
+        qs = Task.objects.filter(assigned_to__username=user)
+    if 'reset' in request.GET:
+        qs = Task.objects.all()
     return qs
 
 

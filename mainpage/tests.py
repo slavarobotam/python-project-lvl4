@@ -1,8 +1,9 @@
-from django.test import TestCase, Client, RequestFactory
-from mainpage.models import Task, Status, Tag
 from django.contrib.auth.models import AnonymousUser, User
+from django.test import Client, RequestFactory, TestCase
 from django.urls import reverse
+
 from mainpage import views
+from mainpage.models import Status, Tag, Task
 
 
 class TaskTest(TestCase):

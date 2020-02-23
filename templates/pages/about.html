@@ -3,8 +3,28 @@
 {% block title %}Main{% endblock %}
 
 {% block content %}
-<main role="main" class="inner cover">
-    <h1 class="cover-heading">Say hello</h1>
-    <p class="lead">via <a href="mailto:zefiratakuet@yandex.ru"><u>mail</u></a></p>
+<main role="main" class="inner cover ">
+    <h1>Task manager</h1>
+        <p class="text-left mt-4">Task_manager is a small web application helping to deal with tasks.
+            Designed for usage for a small team but also suitable for single person usage.</p>
+      <h3 id="features">Features</h3>
+    <ul class="text-left">
+        <li>Tasks with simple but enough detailization: consist of fields <code>Name</code>, <code>Description</code>, <code>Assigned_to</code>, <code>Creator</code>, <code>Tags</code> and <code>Status</code>.
+            <ul>
+                <li>Default setting for <code>Assigned_to</code> and <code>Creator</code> — current user name.</li>
+                <li>Default task status is &quot;New&quot;.</li>
+                <li>Available multiple choice for tags.</li>
+            </ul>
+        </li>
+        <li>Equal maximum rights for all users: read, edit and delete tasks and same for statuses.</li>
+        <li>Filters for fields <code>Assigned_to</code>, <code>Tags</code>, <code>Statuses</code></li>
+        <li>Button &quot;My tasks&quot; for quick showing current user&#39;s tasks.</li>
+        <li>Calm dark theme</li>
+    </ul>
+
+
+    <h3 class="cover-heading">Contacts</h1>
+    <p class="lead">You can <a href="mailto:zefiratakuet@yandex.ru"><u>write me</u></a> your feedback</p>
+    <a href="{% url 'mainpage:home' %}" class="btn btn-secondary mx-2" role="button">Back</a>
 </main>
 {% endblock %}

@@ -27,6 +27,7 @@
             <label for="newstatus" class="col-2 text-nowrap">Add new:</label>
             {% bootstrap_field form.name layout="horizontal" size="small" horizontal_field_class='col-md-8 mx-3' show_label=False %}
             <button type="submit" class="btn btn-success">Create</button>
+            <a href="{% url 'mainpage:home' %}" class="btn btn-secondary mx-2" role="button">Back</a>
         </div>
     </form>
 
