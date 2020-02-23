@@ -7,11 +7,6 @@
 
     <!-- Filters -->
     <form method="GET" class="mt-3" action=".">{% csrf_token %}
-        <!-- Buttons "My tasks" and "Add new" -->
-        <div class="row justify-content-center mt-4">
-            <button name='mytasks' class="btn btn-primary mr-2" type='submit'>My tasks</button>
-            <button name='newtask' action="{% url 'mainpage:new_task' %}" class="btn btn-success mr-2" type='submit'>Add new</button>
-        </div>
         {% if form.errors %} {{ form.errors }} {% endif %}
         <!-- Filter row -->
         <div class="form-inline justify-content-center mt-4">
@@ -49,17 +44,24 @@
     </div>
 
     <!-- Tasks -->
-        {% for task in queryset %}
-            <div class="row row-hover mb-2 text-left position-relative">
-                    <div class="col-1 ">{{ task.tags.all|join:", "|truncatewords:3 }}</div>
-                    <div class="col-3 position-static"><a class="stretched-link text-decoration-none" href="{{ task.get_absolute_url }}">
-                        {{ task.name|truncatewords:10  }}</a></div>
-                    <div class="col-5 ">{{ task.description|linebreaks|truncatewords:15 }}</div>
-                    <div class="col-1 text-truncate">{{ task.status }}</div>
-                    <div class="col-1 text-truncate ">{{ task.creator }}</div>
-                    <div class="col-1  text-truncate">{{ task.assigned_to }}</div>
-            </div>
-        {% endfor %}
+    {% for task in queryset %}
+        <div class="row row-hover mb-2 text-left position-relative">
+                <div class="col-1 ">{{ task.tags.all|join:", "|truncatewords:3 }}</div>
+                <div class="col-3 position-static"><a class="stretched-link text-decoration-none" href="{{ task.get_absolute_url }}">
+                    {{ task.name|truncatewords:10  }}</a></div>
+                <div class="col-5 ">{{ task.description|linebreaks|truncatewords:15 }}</div>
+                <div class="col-1 text-truncate">{{ task.status }}</div>
+                <div class="col-1 text-truncate ">{{ task.creator }}</div>
+                <div class="col-1  text-truncate">{{ task.assigned_to }}</div>
+        </div>
+    {% endfor %}
 
+    <!-- Buttons "My tasks" and "Add new" -->
+    <form method="GET" class="mt-3" action=".">{% csrf_token %}
+        <div class="row justify-content-center mt-4">
+            <button name='mytasks' class="btn btn-primary mr-2" type='submit'>My tasks</button>
+            <button name='newtask' action="{% url 'mainpage:new_task' %}" class="btn btn-success mr-2" type='submit'>Add new</button>
+        </div>
+    </form>
 </main>
 {% endblock %}
