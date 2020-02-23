@@ -1,7 +1,7 @@
 env:
   global:
-  - CC_TEST_REPORTER_ID=d1c09e20447ae8db9c52cc5e8e6a8da876b2ffbb726f5b24f951e0ce8dc11367
   - secure: Yf82vHEklwjo8CTXegC9t1OxWTGyN48FiEZD0B1GoXiatQfh3rLwuAmiLUJiITkEsBRonQTyRXuKmmxFOd4uCGQbXqsvI/bUvjDP/wAs81ufBbu+jFldr2DbG6CyyUB0QGEA5JsjwCZ/uYYg5DhWswGjIgps/VEgxIDxZnlZ4GvkUnE28docbOlL11oZHjLUHU0Us8gWqkPi14nfXh+mZmRLhZ7FtAftVzedY9Fprqaj+ytJMghPwrU5cBPpv3SWtenioH7zK8/DJF0tB4A15A/1Q+BPAFAkFfXP6t0ONysI2Qyn/xatWMZ8JBiQlekY7TFsurzdDPRRoqryYCSHEsFpyJlBxpsqHMeAjuVBR0KSO9nmAhyFoblidqRe72p/f7jg4JZSdsOj145WZHUGB3y0zmlKxtpFCFIR/ruNHgf2K1jtaX4yXRBkTXk2et/f5zJnpce7Z54o2C9Ge9osGHjHV85FNZHvalJQfwS3/JCuuql3YTUiS5x/PNy2/YaMPiuBM8FeMsahmbPts98J+30k7aTrEB3CrI84VKUNm7WF7kVlR8LjROr5wkK+YqDRf1JMpi4EU0hWWF0ldWwnKBlUOCxRgevnxE32E3VePCI16oT9QpP+fdjPjPGJWv38o7Y0Xy2q1Fc7q1NJbDVY6RPqwoCP13klASPQ6yAPKu4=
+  - secure: h52uJaEfO8DJGd3bdAW+cBNqjhmopULWMsDlZ1pjwC1D0wDhwELZqXXrbyEQ7T7cuxR3OqNEYu50HI7Klg202dqsKNEt6qUvwJB78mii2fRx1nbsQ2UOCZt3VeJ9S5exWtHQF8r1cxy0xbd0zjnXuJIIsys/9NAUOX7JhVrxph1ORtT+awFbTevOrOP+Gg5aWDS0jE8OdoP5GiHH0m9kvGyUeqDL5M03iae9riYc9LuXqYvJbP2ghE4ySOLsvZoKLLqiwgdxTb4pvIXXmovYFi/BAlfSym/aEOLKb7j2z9KVm+lLVgnIGFX/RChou0aJ3tjL7bf8ZMD6lyYxAx5fi7tP0lcPRYT373bN7nSMn2T79mgv+VgDOzfOzbknoQVv8xXAVmHfpMNGIzX4SRs2Q9FGaIJR4L+BO1KsMqPN+wX1TWamuSu4ZIX8rxNo2TdEe/TtK4V8UiEqTZzouT7IaAiDqxhLA9KF4yR+M8Mc1WcqPW8D1++vPHHE7pdugzS+WdRHDdTf/h/vbGhPVs6J73ap13w9ikNkOZ6ROEOjyy3eROgNKICAKM4bwQr4Iv3J1J4yZipsufY+KZccFp7BsjLe4MupN59E0BVP3LrqYIiyiJA1N9rewiH6NUq0pd4Ne4KH1e6TZIQnBh4lsTDG5HwUa8mZwlqlsMfqKA8h7p4=
 language: python
 python:
 - '3.6'
@@ -21,5 +21,5 @@ script:
 - make lint
 - make test
 after_script:
-- "./cc-test-reporter format-coverage -d -t coverage.py coverage.xml after-build $TRAVIS_TEST_RESULT"
+- ./cc-test-reporter format-coverage -d -t coverage.py coverage.xml after-build $TRAVIS_TEST_RESULT
 - if [[ "$TRAVIS_TEST_RESULT" == 0 ]]; then ./cc-test-reporter upload-coverage; fi

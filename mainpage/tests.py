@@ -29,7 +29,7 @@ class TaskTest(TestCase):
         self.assertEqual(Task.objects.count(), 1)
 
     def test_task_list(self):
-        request = self.factory.get('/tasks/')
+        request = self.factory.get('/')
         request.user = self.user
         response = views.home(request)
         self.assertEqual(response.status_code, 200)

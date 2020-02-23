@@ -4,7 +4,7 @@
     <h3 class="masthead-brand"><a href="{% url 'mainpage:home' %}">Task manager</a></h3>
     <nav class="nav nav-masthead justify-content-center">
         <a
-          {% if '/' == request.path %}
+          {% if '/' == request.path or '/tasks/' == request.path %}
             class="nav-link active"
           {% else %}
             class="nav-link"
