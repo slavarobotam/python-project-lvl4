@@ -16,3 +16,17 @@ Can be found here: [slavarobotam-task-manager.herokuapp.com](https://slavarobota
 - Filters for fields `Assigned_to`, `Tags`, `Statuses`
 - Button "My tasks" for quick showing current user's tasks.
 - Calm dark theme
+
+### Local usage
+
+You will need the following environment variables specified in your `.env` file: 
+- SECRET_KEY
+- ACCESS_TOKEN
+- DATABASE_URL
+
+Run the following commands to use locally:
+
+    git clone https://github.com/slavarobotam/python-project-lvl4.git
+    python manage.py runserver
+
+The app will be available at http://127.0.0.1:8000/
