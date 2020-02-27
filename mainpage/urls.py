@@ -5,7 +5,7 @@ from mainpage import views
 app_name = 'mainpage'
 
 urlpatterns = [
-    path('', views.home, name='home'),
+    path('', views.redirect_to_home),
     path('about/', views.about, name='about'),
     path('settings/', views.settings, name='settings'),
     path('statuses/new/', views.create_status, name='create_status'),
