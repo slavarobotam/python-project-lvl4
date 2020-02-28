@@ -45,11 +45,8 @@
                 <button action="{% url 'mainpage:edit_task' task.pk %}" class="btn btn-success mr-2" type='submit'>Edit task</button>
             </form>
             <form method="GET" action="{% url 'mainpage:delete_task' task.pk%}">{% csrf_token %}
-                <button class="btn btn-danger mr-2" type='submit'>Delete</button>
-            </form>
-            <form method="GET" action="{% url 'mainpage:home'%}">{% csrf_token %}
-                <button action="{% url 'mainpage:home'%}" class="btn btn-secondary" type='submit'>Back</button>
-            </form>
+                <button class="btn btn-danger mr-1" type='submit'>Delete</button>
+            <a href="{% url 'mainpage:home'%}" class="btn btn btn-secondary" role="button">Back</a>
     </div>
   
 {% endblock %}

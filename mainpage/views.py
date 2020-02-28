@@ -129,8 +129,6 @@ def edit_task(request, pk, template_name='tasks/edit_task.html'):
     if request.method == 'POST':
         task = get_object_or_404(Task, pk=pk)
         form = TaskForm(request.POST or None, instance=task)
-        if 'back' in request.POST:
-            return redirect('/')
         if form.is_valid():
             form.save()
             return redirect('/')
