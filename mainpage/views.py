@@ -1,20 +1,14 @@
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
+from django.urls import reverse_lazy
+from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
+                                  ListView, UpdateView)
+from django.views.generic.base import TemplateView
 
 from mainpage.forms import SignUpForm, StatusForm, TaskForm
 from mainpage.models import Status, Tag, Task
-from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import (
-    ListView,
-    CreateView,
-    DeleteView,
-    UpdateView,
-    DetailView,
-    FormView
-)
-from django.views.generic.base import TemplateView
 
 
 class Home(LoginRequiredMixin, ListView):
