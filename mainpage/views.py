@@ -1,7 +1,6 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
-from django.http import HttpResponseBadRequest
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import redirect
 
 from mainpage.forms import SignUpForm, StatusForm, TaskForm
 from mainpage.models import Status, Tag, Task
@@ -12,20 +11,35 @@ from django.views.generic import (
     CreateView,
     DeleteView,
     UpdateView,
+    DetailView,
+    FormView
 )
 from django.views.generic.base import TemplateView
 
 
-class Home(ListView, LoginRequiredMixin):
+class Home(LoginRequiredMixin, ListView):
+    login_url = '/accounts/login/'
     template_name = 'home.html'
     model = Task
     context_object_name = 'tasks'
 
     def get_queryset(self):
-        if self.request.GET.get('newtask'):
-            return redirect('/tasks/new')
-        query_set = query_filter(self.request)
-        return query_set
+        qs = Task.objects.all()
+        tag = self.request.GET.get('tag')
+        status = self.request.GET.get('status')
+        assigned_to = self.request.GET.get('assigned_to')
+        if is_valid_query(status) and status != 'All statuses':
+            qs = qs.filter(status__name=status)
+        if is_valid_query(tag) and tag != 'All tags':
+            qs = qs.filter(tags__name=tag)
+        if is_valid_query(assigned_to) and assigned_to != 'Assigned to all':
+            qs = qs.filter(assigned_to__username=assigned_to)
+        if 'mytasks' in self.request.GET:
+            user = self.request.user
+            qs = Task.objects.filter(assigned_to__username=user)
+        if 'reset' in self.request.GET:
+            qs = Task.objects.all()
+        return qs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -39,7 +53,7 @@ class Home(ListView, LoginRequiredMixin):
         return context
 
 
-def is_valid_queryparam(param):
+def is_valid_query(param):
     return param != '' and param is not None
 
 
@@ -48,11 +62,11 @@ def query_filter(request):
     tag = request.GET.get('tag')
     status = request.GET.get('status')
     assigned_to = request.GET.get('assigned_to')
-    if is_valid_queryparam(status) and status != 'All statuses':
+    if is_valid_query(status) and status != 'All statuses':
         qs = qs.filter(status__name=status)
-    if is_valid_queryparam(tag) and tag != 'All tags':
+    if is_valid_query(tag) and tag != 'All tags':
         qs = qs.filter(tags__name=tag)
-    if is_valid_queryparam(assigned_to) and assigned_to != 'Assigned to all':
+    if is_valid_query(assigned_to) and assigned_to != 'Assigned to all':
         qs = qs.filter(assigned_to__username=assigned_to)
     if 'mytasks' in request.GET:
         user = request.user
@@ -62,7 +76,8 @@ def query_filter(request):
     return qs
 
 
-class Settings(ListView, LoginRequiredMixin):
+class Settings(LoginRequiredMixin, ListView):
+    login_url = '/accounts/login/'
     template_name = 'pages/settings.html'
     model = Status
     context_object_name = 'statuses'
@@ -86,9 +101,6 @@ class CreateStatus(CreateView):
     success_url = reverse_lazy('mainpage:settings')
     form_class = StatusForm
 
-    def form_valid(self, form):
-        return super().form_valid(form)
-
 
 class DeleteStatus(DeleteView):
     template_name = 'pages/settings.html'
@@ -102,90 +114,49 @@ class UpdateStatus(UpdateView):
     success_url = reverse_lazy('mainpage:settings')
     fields = ['name']
 
+
+class TaskView(DetailView):
+    template_name = 'tasks/view_task.html'
+    model = Task
+
+
+class CreateTask(CreateView):
+    template_name = 'tasks/new_task.html'
+    model = Task
+    form_class = TaskForm
+    success_url = reverse_lazy('mainpage:home')
+
+    def get_initial(self):
+        initial = super(CreateTask, self).get_initial()
+        initial['name'] = Task.random_taskname()
+        initial['creator'] = self.request.user
+        initial['assigned_to'] = self.request.user
+        initial['description'] = 'Things to do:'
+        return initial
+
+
+class EditTask(UpdateView):
+    template_name = 'tasks/edit_task.html'
+    model = Task
+    form_class = TaskForm
+    success_url = reverse_lazy('mainpage:home')
+
+
+class DeleteTask(DeleteView):
+    template_name = 'tasks/task_confirm_delete.html'
+    model = Task
+    success_url = reverse_lazy('mainpage:home')
+
+
+class SignUp(FormView):
+    form_class = SignUpForm
+    success_url = reverse_lazy('mainpage:home')
+    template_name = 'registration/signup.html'
+
     def form_valid(self, form):
-        return super().form_valid(form)
-
-
-def view_task(request, pk, template_name='tasks/view_task.html'):
-    if request.method == 'POST':
-        task = get_object_or_404(Task, pk=pk)
-        form = TaskForm(request.POST or None, instance=task)
-        return render(request,
-                      template_name,
-                      {'task': task, 'form': form})
-    if request.method == 'GET':
-        task = get_object_or_404(Task, pk=pk)
-        form = TaskForm(instance=task)
-        return render(request,
-                      template_name,
-                      {'task': task, 'form': form})
-    else:
-        return HttpResponseBadRequest('Bad request')
-
-
-def edit_task(request, pk, template_name='tasks/edit_task.html'):
-    if request.method == 'POST':
-        task = get_object_or_404(Task, pk=pk)
-        form = TaskForm(request.POST or None, instance=task)
-        if form.is_valid():
-            form.save()
-            return redirect('/')
-        return render(request, template_name, {'form': form, 'task': task})
-    if request.method == 'GET':
-        task = get_object_or_404(Task, pk=pk)
-        form = TaskForm(instance=task)
-        return render(request, template_name, {'form': form, 'task': task})
-    else:
-        return HttpResponseBadRequest('Bad request')
-
-
-def create_task(request, template_name='tasks/new_task.html'):
-    if request.method == 'POST':
-        form = TaskForm(request.POST or None,
-                        initial={'name': Task.random_taskname(),
-                                 'description': '',
-                                 'creator': request.user,
-                                 'assigned_to': request.user})
-        if form.is_valid():
-            form.save()
-            return redirect('/')
-        return render(request, template_name, {'form': form})
-    if request.method == 'GET':
-        form = TaskForm(request.GET or None,
-                        initial={'name': Task.random_taskname(),
-                                 'description': '',
-                                 'creator': request.user,
-                                 'assigned_to': request.user})
-        return render(request, template_name, {'form': form})
-    else:
-        return HttpResponseBadRequest('Bad request')
-
-
-def delete_task(request, pk, template_name='tasks/task_confirm_delete.html'):
-    if request.method == 'GET':
-        task = get_object_or_404(Task, pk=pk)
-        return render(request, template_name, {'object': task})
-    if request.method == 'POST':
-        task = get_object_or_404(Task, pk=pk)
-        task.delete()
-        return redirect('/')
-    else:
-        return HttpResponseBadRequest('Bad request')
-
-
-def signup(request):
-    if request.method == 'GET':
-        form = SignUpForm(request.GET or None)
-        return render(request, 'registration/signup.html', {'form': form})
-    if request.method == 'POST':
-        form = SignUpForm(request.POST or None)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=password)
-            login(request, user)
-            return redirect('/')
-        return render(request, 'registration/signup.html', {'form': form})
-    else:
-        return HttpResponseBadRequest('Bad request')
+        form.save()
+        username = self.request.POST['username']
+        password = self.request.POST['password1']
+        user = authenticate(username=username, password=password)
+        login(self.request, user)
+        return redirect(self.success_url)

@@ -33,7 +33,7 @@ class TaskTest(TestCase):
     # def test_task_list(self):
     #     request = self.factory.get('/')
     #     request.user = self.user
-    #     response = views.home(request)
+    #     response = views.Home.as_view()
     #     self.assertEqual(response.status_code, 200)
 
     # def test_anonymous_access(self):

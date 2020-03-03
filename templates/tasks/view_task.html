@@ -8,18 +8,18 @@
     <fieldset disabled>
       <div class="form-group">
           <label for="name">Task name</label>
-          <input type="text" class="form-control" id="name" name="name" value="{{ form.name.value }}">
+          <input type="text" class="form-control" id="name" name="name" value="{{ task.name }}">
       </div>
       <div class="form-row mt-2">
           <div class="col-10">
               <label for="description">Description</label>
-              <textarea class="form-control" id="description" rows="12" name="description">{{ form.description.value }}</textarea>
+              <textarea class="form-control" id="description" rows="12" name="description">{{ task.description }}</textarea>
           </div>
           <div class="col-2">
               <label for="tags">Tags</label>
-              <select multiple class="form-control" size="15" name="tags" >
-                  {% for tags in form.tags %}
-                  {{ tags }}
+              <select multiple class="form-control text-left" size="15" name="tags" >
+                  {% for tag in task.tags.all %}
+                  <option>{{ tag }}</option>
                   {% endfor %}
               </select>
           </div>
