@@ -1,8 +1,9 @@
-from django.contrib.auth.models import AnonymousUser, User
+from django.contrib.auth.models import User
+# from django.contrib.auth.models import AnonymousUser, User
 from django.test import Client, RequestFactory, TestCase
 from django.urls import reverse
 
-from mainpage import views
+# from mainpage import views
 from mainpage.models import Status, Tag, Task
 
 
@@ -29,16 +30,16 @@ class TaskTest(TestCase):
         self.assertEqual(some_task.__str__(), some_task.name)
         self.assertEqual(Task.objects.count(), 1)
 
-    def test_task_list(self):
-        request = self.factory.get('/')
-        request.user = self.user
-        response = views.home(request)
-        self.assertEqual(response.status_code, 200)
+    # def test_task_list(self):
+    #     request = self.factory.get('/')
+    #     request.user = self.user
+    #     response = views.home(request)
+    #     self.assertEqual(response.status_code, 200)
 
-    def test_anonymous_access(self):
-        response = self.c.get(reverse('mainpage:home'))
-        self.user = AnonymousUser()
-        self.assertEqual(response.status_code, 302)
+    # def test_anonymous_access(self):
+    #     response = self.c.get(reverse('mainpage:home'))
+    #     self.user = AnonymousUser()
+    #     self.assertEqual(response.status_code, 302)
 
     def test_invalid_task(self):
         data = {'description': 'test description'}

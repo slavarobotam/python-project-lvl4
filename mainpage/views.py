@@ -1,34 +1,42 @@
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 
 from mainpage.forms import SignUpForm, StatusForm, TaskForm
 from mainpage.models import Status, Tag, Task
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import (
+    ListView,
+    CreateView,
+    DeleteView,
+    UpdateView,
+)
+from django.views.generic.base import TemplateView
 
 
-def redirect_to_home(request):
-    return redirect('/tasks/')
+class Home(ListView, LoginRequiredMixin):
+    template_name = 'home.html'
+    model = Task
+    context_object_name = 'tasks'
 
-
-@login_required
-def home(request, template_name='home.html'):
-    if request.method == 'GET':
-        if 'newtask' in request.GET:
+    def get_queryset(self):
+        if self.request.GET.get('newtask'):
             return redirect('/tasks/new')
-        else:
-            query_set = query_filter(request)
-        context = {
-            'queryset': query_set,
+        query_set = query_filter(self.request)
+        return query_set
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'queryset': self.get_queryset(),
             'statuses': Status.objects.all(),
             'tags': Tag.objects.all(),
             'tasks': Task.objects.all(),
             'users': User.objects.all(),
-        }
-        return render(request, template_name, context)
-    else:
-        return HttpResponseBadRequest('Bad request')
+            })
+        return context
 
 
 def is_valid_queryparam(param):
@@ -54,58 +62,48 @@ def query_filter(request):
     return qs
 
 
-@login_required
-def settings(request, template_name='pages/settings.html'):
-    if request.method == 'GET':
-        context = {
+class Settings(ListView, LoginRequiredMixin):
+    template_name = 'pages/settings.html'
+    model = Status
+    context_object_name = 'statuses'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
             'form': StatusForm(),
             'statuses': Status.objects.all(),
-        }
-        return render(request, template_name, context)
-    else:
-        return HttpResponseBadRequest('Bad request')
+            })
+        return context
 
 
-def about(request, template_name='pages/about.html'):
-    return render(request, template_name)
+class About(TemplateView):
+    template_name = "pages/about.html"
 
 
-def create_status(request, template_name='pages/settings.html'):
-    if request.method == 'POST':
-        form = StatusForm(request.POST or None)
-        if form.is_valid():
-            form.save()
-            return redirect('/settings/')
-        return render(request, template_name, {'form': form})
-    else:
-        return HttpResponseBadRequest('Bad request')
+class CreateStatus(CreateView):
+    template_name = 'pages/settings.html'
+    model = Status
+    success_url = reverse_lazy('mainpage:settings')
+    form_class = StatusForm
+
+    def form_valid(self, form):
+        return super().form_valid(form)
 
 
-def delete_status(request, pk, template_name='pages/settings.html'):
-    if request.method == 'POST':
-        status = get_object_or_404(Status, pk=pk)
-        status.delete()
-        return redirect('/settings/')
-    # return render(request, template_name, {'object': status})
-    else:
-        return HttpResponseBadRequest('Bad request')
+class DeleteStatus(DeleteView):
+    template_name = 'pages/settings.html'
+    model = Status
+    success_url = reverse_lazy('mainpage:settings')
 
 
-def update_status(request, pk, template_name='pages/status_edit.html'):
-    if request.method == 'GET':
-        status = get_object_or_404(Status, pk=pk)
-        form = StatusForm(instance=status)
-        return render(request, template_name, {'form': form})
-    if request.method == 'POST':
-        status = get_object_or_404(Status, pk=pk)
-        form = StatusForm(request.POST or None, instance=status)
-        if form.is_valid():
-            status = form.save()
-            status.save()
-            return redirect('/settings/')
-        return render(request, template_name, {'form': form})
-    else:
-        return HttpResponseBadRequest('Bad request')
+class UpdateStatus(UpdateView):
+    template_name = 'pages/status_edit.html'
+    model = Status
+    success_url = reverse_lazy('mainpage:settings')
+    fields = ['name']
+
+    def form_valid(self, form):
+        return super().form_valid(form)
 
 
 def view_task(request, pk, template_name='tasks/view_task.html'):

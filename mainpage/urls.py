@@ -1,18 +1,20 @@
 from django.urls import path
-
 from mainpage import views
+from django.views.generic.base import RedirectView
 
 app_name = 'mainpage'
 
 urlpatterns = [
-    path('', views.redirect_to_home),
-    path('about/', views.about, name='about'),
-    path('settings/', views.settings, name='settings'),
-    path('statuses/new/', views.create_status, name='create_status'),
-    path('statuses/<int:pk>/edit/', views.update_status, name='edit_status'),
-    path('statuses/<int:pk>/delete/', views.delete_status,
+    path('', RedirectView.as_view(url='tasks/')),
+    path('tasks/', views.Home.as_view(), name='home'),
+    path('settings/', views.Settings.as_view(), name='settings'),
+    path('about/', views.About.as_view(), name='about'),
+    path('statuses/<int:pk>/delete/', views.DeleteStatus.as_view(),
          name='delete_status'),
-    path('tasks/', views.home, name='home'),
+    path('statuses/new/', views.CreateStatus.as_view(), name='create_status'),
+    path('statuses/<int:pk>/edit/', views.UpdateStatus.as_view(),
+         name='edit_status'),
+
     path('tasks/<int:pk>/', views.view_task, name='view_task'),
     path('tasks/new', views.create_task, name='new_task'),
     path('tasks/<int:pk>/edit/', views.edit_task, name='edit_task'),

@@ -16,3 +16,5 @@ test:
 	@coverage report
 	@coverage xml
 
+run:
+	@python manage.py runserver
