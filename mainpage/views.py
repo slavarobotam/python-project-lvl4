@@ -17,22 +17,27 @@ class Home(LoginRequiredMixin, ListView):
     model = Task
     context_object_name = 'tasks'
 
+    @staticmethod
+    def add_filter(filters, lookup, query, if_not=None):
+        if query and query != if_not:
+            filters[lookup] = query
+
     def get_queryset(self):
-        qs = Task.objects.all()
+        qs = super().get_queryset()
         tag = self.request.GET.get('tag')
         status = self.request.GET.get('status')
         assigned_to = self.request.GET.get('assigned_to')
-        if is_valid_query(status) and status != 'All statuses':
-            qs = qs.filter(status__name=status)
-        if is_valid_query(tag) and tag != 'All tags':
-            qs = qs.filter(tags__name=tag)
-        if is_valid_query(assigned_to) and assigned_to != 'Assigned to all':
-            qs = qs.filter(assigned_to__username=assigned_to)
+        filters = {}
+        self.add_filter(filters, 'status__name', status, if_not='All statuses')
+        self.add_filter(filters, 'tags__name', tag, if_not='All tags')
+        self.add_filter(filters, 'assigned_to__username', assigned_to,
+                        if_not='Assigned to all')
         if 'mytasks' in self.request.GET:
-            user = self.request.user
-            qs = Task.objects.filter(assigned_to__username=user)
+            self.add_filter(filters, 'assigned_to__username',
+                            self.request.user)
         if 'reset' in self.request.GET:
-            qs = Task.objects.all()
+            filters = {}
+        qs = qs.filter(**filters)
         return qs
 
     def get_context_data(self, **kwargs):
@@ -41,14 +46,9 @@ class Home(LoginRequiredMixin, ListView):
             'queryset': self.get_queryset(),
             'statuses': Status.objects.all(),
             'tags': Tag.objects.all(),
-            'tasks': Task.objects.all(),
             'users': User.objects.all(),
             })
         return context
-
-
-def is_valid_query(param):
-    return param != '' and param is not None
 
 
 class Settings(LoginRequiredMixin, ListView):
