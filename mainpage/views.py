@@ -51,25 +51,6 @@ def is_valid_query(param):
     return param != '' and param is not None
 
 
-def query_filter(request):
-    qs = Task.objects.all()
-    tag = request.GET.get('tag')
-    status = request.GET.get('status')
-    assigned_to = request.GET.get('assigned_to')
-    if is_valid_query(status) and status != 'All statuses':
-        qs = qs.filter(status__name=status)
-    if is_valid_query(tag) and tag != 'All tags':
-        qs = qs.filter(tags__name=tag)
-    if is_valid_query(assigned_to) and assigned_to != 'Assigned to all':
-        qs = qs.filter(assigned_to__username=assigned_to)
-    if 'mytasks' in request.GET:
-        user = request.user
-        qs = Task.objects.filter(assigned_to__username=user)
-    if 'reset' in request.GET:
-        qs = Task.objects.all()
-    return qs
-
-
 class Settings(LoginRequiredMixin, ListView):
     login_url = '/accounts/login/'
     template_name = 'pages/settings.html'
